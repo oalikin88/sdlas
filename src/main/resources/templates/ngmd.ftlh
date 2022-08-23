@@ -43,7 +43,7 @@
                     <div class="row mb-3">
                         <label for="number" class="col-sm-2 col-form-label">Учётный номер:</label>
                         <div class="col-sm-10">
-                        <input type="number" class="form-control" name="number" placeholder="Введите учётный номер" />      
+                        <input type="text" class="form-control" name="number" placeholder="Введите учётный номер" />      
                         </div>
                         </div>
                     <div class="row mb-3">
@@ -73,7 +73,7 @@
                     <div class="row mb-3">
                         <label for="type" class="col-sm-2 col-form-label">Ёмкость носителя(длина ленты):</label>
                         <div class="col-sm-10">
-                        <input type="number" class="form-control" name="capacity" placeholder="Укажите ёмкость носителя(длину ленты)" />
+                        <input type="text" class="form-control" name="capacity" placeholder="Укажите ёмкость носителя(длину ленты)" />
                         </div>
                         </div>
                     <div class="row mb-3">

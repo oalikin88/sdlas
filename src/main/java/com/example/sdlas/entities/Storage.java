@@ -4,8 +4,6 @@
  */
 package com.example.sdlas.entities;
 
-import com.example.sdlas.repositories.CardRepo;
-import com.example.sdlas.repositories.HddRepo;
 import java.util.Date;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,20 +27,20 @@ public abstract class Storage {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Long number;
+    private String number;
     private Date dateRegistration;
     private String type;
     private String tag;
     private String manufactureNumber;
-    private int capacity;
+    private String capacity;
     private String fromPlace;
-    private Long pcNumber;
+    private String pcNumber;
     private boolean signEmployee;
     private boolean signToBack;
     private String registrationEndSign;
     private String comment;
 
-    public Storage(Long number, Date dateRegistration, String type, String tag, String manufactureNumber, int capacity, String fromPlace, Long pcNumber, boolean signEmployee, boolean signToBack, String registrationEndSign, String comment) {
+    public Storage(String number, Date dateRegistration, String type, String tag, String manufactureNumber, String capacity, String fromPlace, String pcNumber, boolean signEmployee, boolean signToBack, String registrationEndSign, String comment) {
         this.number = number;
         this.dateRegistration = dateRegistration;
         this.type = type;

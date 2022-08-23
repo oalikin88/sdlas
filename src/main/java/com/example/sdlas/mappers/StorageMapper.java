@@ -34,7 +34,7 @@ public class StorageMapper {
         if(dto.number != null) {
             storage.setNumber(dto.number);
         } else {
-            storage.setNumber(((int)0));
+            storage.setNumber("отсутствует");
         }
         
         if(dto.dateRegistration != null) {
@@ -56,17 +56,22 @@ public class StorageMapper {
             storage.setManufactureNumber(dto.manufactureNumber);
         }
         
-        if(dto.capacity != 0) {
+        if(dto.capacity != null) {
             storage.setCapacity(dto.capacity);
+        } else {
+            storage.setCapacity("отсутствует");
         }
         
         if(dto.fromPlace != null) {
             storage.setFromPlace(dto.fromPlace);
         }
         
-        if(dto.pcNumber != 0) {
+        if(dto.pcNumber != null) {
             storage.setPcNumber(dto.pcNumber);
+        } else {
+            storage.setPcNumber("отсутствует");
         }
+        
         if(dto.registrationEndSign != null) {
             storage.setRegistrationEndSign(dto.registrationEndSign);
         }

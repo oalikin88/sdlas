@@ -21,14 +21,14 @@ public class StorageDto {
     public static final SimpleDateFormat dateFormat
       = new SimpleDateFormat("yyyy-MM-dd");
     
-    public Long number;
+    public String number;
     public String dateRegistration;
     public String type;
     public String tag;
     public String manufactureNumber;
-    public int capacity;
+    public String capacity;
     public String fromPlace;
-    public Long pcNumber;
+    public String pcNumber;
     public boolean signEmployee;
     public boolean signToBack;
     public String registrationEndSign;
