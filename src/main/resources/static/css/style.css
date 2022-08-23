@@ -1,0 +1,19 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 23 авг. 2022 г., 8:52:30
+    Author     : 041AlikinOS
+*/
+
+svg {
+    transition: .3s;
+}
+
+svg:hover {
+     fill: #0059a9;
+     transform: translateY(-3%);
+    
+           
+}
