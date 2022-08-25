@@ -46,11 +46,13 @@ public class MainController {
         if(storageName.equals("ngmd")) {
         Iterable<Hdd> hddies = hddRepo.findAll();
         model.addAttribute("hdd", hddies);        
-        model.addAttribute("storage", "hdd");        
+        model.addAttribute("name", "НЖМД");        
+        model.addAttribute("path", "ngmd");        
         } else {
          Iterable<Card> cards = cardRepo.findAll();
         model.addAttribute("card", cards);
-        model.addAttribute("storage", "card");
+        model.addAttribute("name", "ключевой носитель");
+        model.addAttribute("path", "card");
         }
         return storageName;
     }
@@ -58,18 +60,19 @@ public class MainController {
     @PostMapping(path = "/ngmd", consumes = { MediaType.ALL_VALUE})
     public String addHdd(StorageDto dto, Map<String, Object> model) throws ParseException {
         
-       // Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+      // Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
       //  UserInfo userDetails = (UserInfo) authentication.getPrincipal();
       // строки выше для того, чтобы вытаскивать пользователя
         
         Storage storage = storageMapper.StorageDtoToStorage(dto);
-
-        
-
         storageService.saveInDb(storage);
 
+        
+        
         Iterable<Hdd> hddies = hddRepo.findAll();
-        model.put("hdd", hddies);
+        model.put("hdd", hddies);  
+        model.put("name", "НЖМД");        
+        model.put("path", "ngmd");  
         return "ngmd";
     }
     
@@ -100,6 +103,8 @@ public class MainController {
 
         Iterable<Card> cards = cardRepo.findAll();
         model.put("card", cards);
+        model.put("name", "ключевой носитель");        
+        model.put("path", "card");     
         return "card";
 
 }
