@@ -3,7 +3,7 @@
 <#list items>
 <table class="table caption-top table-striped">
    
-  <caption class="text-center">Список НЖМД</caption>
+  <caption class="text-center">${name}</caption>
   <thead class="table-light">
     <tr class="align-middle text-center">
 

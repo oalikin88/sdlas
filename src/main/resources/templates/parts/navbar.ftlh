@@ -23,6 +23,12 @@
             <li><a class="dropdown-item" href="/ngmd">Журнал учёта НЖМД</a></li>
             <li><a class="dropdown-item" href="/card">Журнал учёта ключевых носителей</a></li>
             <li><a class="dropdown-item" href="/usb">Журнал учёта USB, CD, DVD</a></li>
+            <li><a class="dropdown-item" href="/usb">Журнал выдачи парольной документации</a></li>
+            <li><a class="dropdown-item" href="/usb">Журнал учёта средств защиты информации от несанкционированного доступа</a></li>
+            <li><a class="dropdown-item" href="/usb">Журнал смены парольной документации от эксплуатируемого оборудования</a></li>
+            <li><a class="dropdown-item" href="/usb">Журнал учёта опечатывания аппаратных средств</a></li>
+            <li><a class="dropdown-item" href="/usb">Журнал учёта ....</a></li>
+            <li><a class="dropdown-item" href="/usb">Журнал учёта ....</a></li>
             
           </ul>
         </li>

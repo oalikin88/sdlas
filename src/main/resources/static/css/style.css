@@ -13,7 +13,9 @@ svg {
 
 svg:hover {
      fill: #0059a9;
-     transform: translateY(-3%);
+     transform: translateY(-5%);
+     
+
     
            
 }
