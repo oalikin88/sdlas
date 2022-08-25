@@ -1,4 +1,5 @@
 <#import "parts/common.ftlh" as c>
+<#import "parts/list.ftlh" as list>
 <@c.page>
 
 <div class="mt-3">
@@ -6,7 +7,7 @@
     <div class="col">
      	<!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStorage">
- Добавить НЖМД
+ Добавить ${storage}
 </button>
     </div>
     <div class="col">
@@ -157,57 +158,6 @@
 </div>
 </div>
 </div>
+<@list.list hdd hdd/>
 
-
-<div class="container-fluid">
-<#list hdd>
-<table class="table caption-top table-striped">
-   
-  <caption class="text-center">Список НЖМД</caption>
-  <thead class="table-light">
-    <tr class="align-middle text-center">
-
-      <th scope="col">id</th>
-      <th scope="col">Учётный номер</th>
-      <th scope="col">Дата постановки на учёт</th>
-      <th scope="col">Тип носителя</th>
-      <th scope="col">Метка категории носителя</th>
-      <th scope="col">Заводской или входящий номер</th>
-      <th scope="col">Ёмкость носителя (длина ленты)</th>
-      <th scope="col">Откуда поступил</th>
-      <th scope="col">Инвентарный № ПК, в который установлен НЖМД</th>
-      <th scope="col">Отметка о снятии с учета, номер документа</th>
-      <th scope="col">Примечание</th>
-    </tr>
-
-  </thead>
-
-  <tbody>
-<#items as hdd>
-    <tr class="text-end">
-
-      <th>${hdd.id}</th>
-      <td>${hdd.number}</td>
-      <td>${hdd.dateRegistration?date?string["dd.MM.yyyy"]}</td>
-      <td>${hdd.type}</td>
-      <td>${hdd.tag}</td>
-      <td>${hdd.manufactureNumber}</td>
-      <td>${hdd.capacity}</td>
-      <td>${hdd.fromPlace}</td>
-      <td>${hdd.pcNumber}</td>
-      <td>${hdd.registrationEndSign}</td>
-      <td>${hdd.comment}</td>     
-    </tr>
-</#items>
-  </tbody>
-</table>
-		
-
-	<#else>
-
-	<p>В журнале ещё нет записей</p>
-
-	</#list>
-
-</div>
 </@c.page>

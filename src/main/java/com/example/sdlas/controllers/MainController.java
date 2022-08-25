@@ -45,10 +45,12 @@ public class MainController {
     public String ngmd(@PathVariable String storageName, Model model) {
         if(storageName.equals("ngmd")) {
         Iterable<Hdd> hddies = hddRepo.findAll();
-        model.addAttribute("hdd", hddies);
+        model.addAttribute("hdd", hddies);        
+        model.addAttribute("storage", "hdd");        
         } else {
          Iterable<Card> cards = cardRepo.findAll();
         model.addAttribute("card", cards);
+        model.addAttribute("storage", "card");
         }
         return storageName;
     }

@@ -1,4 +1,5 @@
 <#import "parts/common.ftlh" as c>
+<#import "parts/list.ftlh" as list>
 <@c.page>
 
 <div class="mt-3">
@@ -158,56 +159,6 @@
 </div>
 </div>
 
+<@list.list card card/>
 
-<div class="container-fluid">
-<#list card>
-<table class="table caption-top table-striped">
-   
-  <caption class="text-center">Список ключевых носителей</caption>
-  <thead class="table-light">
-    <tr class="align-middle text-center">
-
-      <th scope="col">id</th>
-      <th scope="col">Учётный номер</th>
-      <th scope="col">Дата постановки на учёт</th>
-      <th scope="col">Тип носителя</th>
-      <th scope="col">Метка категории носителя</th>
-      <th scope="col">Заводской или входящий номер</th>
-      <th scope="col">Ёмкость носителя (длина ленты)</th>
-      <th scope="col">Откуда поступил</th>
-      <th scope="col">Инвентарный № ПК, в который установлен НЖМД</th>
-      <th scope="col">Отметка о снятии с учета, номер документа</th>
-      <th scope="col">Примечание</th>
-    </tr>
-
-  </thead>
-
-  <tbody>
-<#items as card>
-    <tr class="text-end">
-
-      <th>${card.id}</th>
-      <td>${card.number}</td>
-      <td>${card.dateRegistration?date?string["dd.MM.yyyy"]}</td>
-      <td>${card.type}</td>
-      <td>${card.tag}</td>
-      <td>${card.manufactureNumber}</td>
-      <td>${card.capacity}</td>
-      <td>${card.fromPlace}</td>
-      <td>${card.pcNumber}</td>
-      <td>${card.registrationEndSign}</td>
-      <td>${card.comment}</td>     
-    </tr>
-</#items>
-  </tbody>
-</table>
-		
-
-	<#else>
-
-	<p>В журнале ещё нет записей</p>
-
-	</#list>
-
-</div>
 </@c.page>
