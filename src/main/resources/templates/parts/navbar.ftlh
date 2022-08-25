@@ -20,10 +20,10 @@
             Журналы
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Журнал учёта НЖМД</a></li>
-            <li><a class="dropdown-item" href="#">Журнал учёта ключевых носителей</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="/ngmd">Журнал учёта НЖМД</a></li>
+            <li><a class="dropdown-item" href="/card">Журнал учёта ключевых носителей</a></li>
+            <li><a class="dropdown-item" href="/usb">Журнал учёта USB, CD, DVD</a></li>
+            
           </ul>
         </li>
       

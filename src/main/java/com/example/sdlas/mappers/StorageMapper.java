@@ -7,6 +7,7 @@ package com.example.sdlas.mappers;
 import com.example.sdlas.entities.Card;
 import com.example.sdlas.entities.Hdd;
 import com.example.sdlas.entities.Storage;
+import com.example.sdlas.entities.Usb;
 import com.example.sdlas.model.StorageDto;
 import java.text.ParseException;
 import java.util.Date;
@@ -26,8 +27,10 @@ public class StorageMapper {
 
        if(dto.name.equals("ngmd")) {
            storage = new Hdd();
-       } else {
+       } else if(dto.name.equals("card")){
            storage = new Card();
+       } else {
+           storage = new Usb();
        }
        
        

@@ -7,10 +7,12 @@ package com.example.sdlas.controllers;
 import com.example.sdlas.entities.Card;
 import com.example.sdlas.entities.Hdd;
 import com.example.sdlas.entities.Storage;
+import com.example.sdlas.entities.Usb;
 import com.example.sdlas.mappers.StorageMapper;
 import com.example.sdlas.model.StorageDto;
 import com.example.sdlas.repositories.CardRepo;
 import com.example.sdlas.repositories.HddRepo;
+import com.example.sdlas.repositories.UsbRepo;
 import com.example.sdlas.services.StorageService;
 import java.text.ParseException;
 import java.util.Map;
@@ -35,7 +37,8 @@ public class MainController {
     private CardRepo cardRepo;
     @Autowired
     private StorageService storageService;
-    
+    @Autowired
+    private UsbRepo usbRepo;
     @Autowired
     private StorageMapper storageMapper;
     
@@ -48,11 +51,16 @@ public class MainController {
         model.addAttribute("hdd", hddies);        
         model.addAttribute("name", "НЖМД");        
         model.addAttribute("path", "ngmd");        
-        } else {
+        } else if(storageName.equals("card")){
          Iterable<Card> cards = cardRepo.findAll();
         model.addAttribute("card", cards);
         model.addAttribute("name", "ключевой носитель");
         model.addAttribute("path", "card");
+        } else {
+           Iterable<Usb> usbies = usbRepo.findAll();
+        model.addAttribute("usb", usbies);
+        model.addAttribute("name", "USB, CD, DVD");
+        model.addAttribute("path", "usb");
         }
         return storageName;
     }
@@ -74,6 +82,25 @@ public class MainController {
         model.put("name", "НЖМД");        
         model.put("path", "ngmd");  
         return "ngmd";
+    }
+    
+    @PostMapping(path = "/usb", consumes = { MediaType.ALL_VALUE})
+    public String addUsb(StorageDto dto, Map<String, Object> model) throws ParseException {
+        
+      // Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+      //  UserInfo userDetails = (UserInfo) authentication.getPrincipal();
+      // строки выше для того, чтобы вытаскивать пользователя
+        
+        Storage storage = storageMapper.StorageDtoToStorage(dto);
+        storageService.saveInDb(storage);
+
+        
+        
+        Iterable<Usb> usbies = usbRepo.findAll();
+        model.put("usb", usbies);
+        model.put("name", "USB, CD, DVD");
+        model.put("path", "usb");
+        return "usb";
     }
     
     @GetMapping("/main")

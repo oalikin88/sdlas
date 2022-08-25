@@ -7,8 +7,10 @@ package com.example.sdlas.services;
 import com.example.sdlas.entities.Card;
 import com.example.sdlas.entities.Hdd;
 import com.example.sdlas.entities.Storage;
+import com.example.sdlas.entities.Usb;
 import com.example.sdlas.repositories.CardRepo;
 import com.example.sdlas.repositories.HddRepo;
+import com.example.sdlas.repositories.UsbRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +25,8 @@ public class StorageService {
     private HddRepo hddRepo;
     @Autowired
     private CardRepo cardRepo;
+    @Autowired
+    private UsbRepo usbRepo;
   
     public void saveInDb(Storage storage) {
     
@@ -32,6 +36,8 @@ public class StorageService {
             
         } else if(storage instanceof Card) {
             cardRepo.save((Card)storage);
+        } else {
+            usbRepo.save((Usb)storage);
         }
         
     }
