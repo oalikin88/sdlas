@@ -1,44 +1,18 @@
-<#macro buttons name path>
+<#macro buttons>
 
-<div class="mt-3">
-  <div class="row">
-    <div class="col">
-     	<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStorage">
- Добавить ${name}
-</button>
-    </div>
-    <div class="col">
-      <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#request">
-  Отправить запрос на подпись
-</button>
-    </div>
 
-    <div class="col">
-        <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-  Подпись в обратном приёме
-</button>
-    </div>
-
-    </div>
-  </div>
-</div>
-    
-	
-	<div class="mt-3">
-
-<!-- Modal -->
-<div class="modal fade" id="addStorage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-xl">
     <div class="modal-content">
-      <div class="modal-header text-center">
-        <h5 class="modal-title w-100" id="staticBackdropLabel">Добавить ${name} в журнал </h5>
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalToggleLabel">Добавить ${name} в журнал</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+
+
       <div class="modal-body">
-        <form method="post" action="${path}">
+
+       <form method="post" action="${path}">
                     <div class="row mb-3">
                         <label for="number" class="col-sm-2 col-form-label">Учётный номер:</label>
                         <div class="col-sm-10">
@@ -71,11 +45,11 @@
                         </div>
                         </div>
                     <div class="row mb-3">
-                        <label for="capacity" class="col-sm-2 col-form-label">Ёмкость носителя(длина ленты):</label>
+                        <label for="type" class="col-sm-2 col-form-label">Ёмкость носителя(длина ленты):</label>
                         <div class="col-sm-10">
                         <input type="text" class="form-control" name="capacity" placeholder="Укажите ёмкость носителя(длину ленты)" />
                         </div>
-                       
+                        </div>
                     <div class="row mb-3">
                         <label for="fromPlace" class="col-sm-2 col-form-label">Откуда поступил:</label>
                         <div class="col-sm-10">
@@ -95,105 +69,52 @@
                         </div>
                         </div>
                         <div class="row mb-3">
-
-                       <script>
-                          $(document).ready(function() {
-                            $("#employee-select").selectize({
-                            create: true,
-                            sortField: 'text',
-                            });
-                        });
-                        </script>
-                    
-   
-                        <label for="employee-select" class="col-sm-2 col-form-label">Выбрать работника:</label>
-                   
-                     <#list employee>
-                     
-                       
-                         <div class="col-sm-10">
-                        <select id="employee-select" class="selectized" placeholder="Выберите работника">
-
-                        <#items as employee>
-                          <option selected></option>
-                          <option value="${employee}">${employee}</option>
-                          </#items>
-
-                        </select>
-
-                                <#else>
-
-                                <p>список пуст</p>
-
-                                </#list>
-
+                        <label for="employee" class="col-sm-2 col-form-label">Работник:</label>
+                        <div class="col-sm-10">
+                        <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Выбрать работника</button>  
                         </div>
-
                         </div>
-                      
-                        
                     <div class="row mb-3">
                         <label for="comment" class="col-sm-2 col-form-label">Примечание:</label>
                         <div class="col-sm-10">
                         <textarea class="form-control" name="comment" placeholder="Примечание"></textarea>
                         
                         </div>
+                        </div>  
                         </div>
-                   
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Отмена</button>
-        <button type="submit" class="btn btn-success">Добавить</button>
-        </form> 
+                          
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                                             <button type="submit" class="btn btn-primary">Добавить</button>
+                                </form> 
+
       </div>
     </div>
   </div>
-</div> 
-
-
 </div>
-<div class="mt-3">
-
-<!-- Modal -->
-<div class="modal fade" id="request" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
+<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalToggleLabel2">Modal 2</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      Request
+        Hide this modal and show the first with the button below.
       </div>
+
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Understood</button>
+        <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Back to first</button>
       </div>
     </div>
   </div>
 </div>
-</div>
-</div>
 
 
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-      wefewfewfew  ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-success">Understood</button>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-</div>
+ 
+<a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Добавить ${name}</a>
+
+
+
 
 </#macro>

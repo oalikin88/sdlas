@@ -6,16 +6,21 @@ package com.example.sdlas.controllers;
 
 import com.example.sdlas.entities.Card;
 import com.example.sdlas.entities.Hdd;
+import com.example.sdlas.entities.JournalPassHandOut;
 import com.example.sdlas.entities.Storage;
 import com.example.sdlas.entities.Usb;
 import com.example.sdlas.mappers.StorageMapper;
 import com.example.sdlas.model.StorageDto;
 import com.example.sdlas.repositories.CardRepo;
 import com.example.sdlas.repositories.HddRepo;
+import com.example.sdlas.repositories.JournalPassHandOutRepo;
 import com.example.sdlas.repositories.UsbRepo;
 import com.example.sdlas.services.StorageService;
+import com.example.sdlas.services.ZirService;
 import java.text.ParseException;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -41,23 +46,31 @@ public class MainController {
     private UsbRepo usbRepo;
     @Autowired
     private StorageMapper storageMapper;
-    
+    @Autowired
+    private ZirService zirService;
+
     
 
     @GetMapping("/{storageName}")
     public String ngmd(@PathVariable String storageName, Model model) {
         if(storageName.equals("ngmd")) {
         Iterable<Hdd> hddies = hddRepo.findAll();
+        Iterable<String> emp = zirService.findAllEmployees();
+       model.addAttribute("employee", emp);
         model.addAttribute("hdd", hddies);        
         model.addAttribute("name", "НЖМД");        
         model.addAttribute("path", "ngmd");        
         } else if(storageName.equals("card")){
          Iterable<Card> cards = cardRepo.findAll();
+        Iterable<String> emp = zirService.findAllEmployees();
+        model.addAttribute("employee", emp);
         model.addAttribute("card", cards);
         model.addAttribute("name", "ключевой носитель");
         model.addAttribute("path", "card");
         } else {
            Iterable<Usb> usbies = usbRepo.findAll();
+        Iterable<String> emp = zirService.findAllEmployees();
+        model.addAttribute("employee", emp);
         model.addAttribute("usb", usbies);
         model.addAttribute("name", "USB, CD, DVD");
         model.addAttribute("path", "usb");
@@ -78,10 +91,12 @@ public class MainController {
         
         
         Iterable<Hdd> hddies = hddRepo.findAll();
+        Iterable<String> emp = zirService.findAllEmployees();
+        model.put("employee", emp);
         model.put("hdd", hddies);  
         model.put("name", "НЖМД");        
         model.put("path", "ngmd");  
-        return "ngmd";
+        return "/ngmd";
     }
     
     @PostMapping(path = "/usb", consumes = { MediaType.ALL_VALUE})
@@ -97,10 +112,12 @@ public class MainController {
         
         
         Iterable<Usb> usbies = usbRepo.findAll();
+        Iterable<String> emp = zirService.findAllEmployees();
+        model.put("employee", emp);
         model.put("usb", usbies);
         model.put("name", "USB, CD, DVD");
         model.put("path", "usb");
-        return "usb";
+        return "/usb";
     }
     
     @GetMapping("/main")
@@ -129,10 +146,23 @@ public class MainController {
         storageService.saveInDb(storage);
 
         Iterable<Card> cards = cardRepo.findAll();
+        Iterable<String> emp = zirService.findAllEmployees();
+        model.put("employee", emp);
         model.put("card", cards);
         model.put("name", "ключевой носитель");        
         model.put("path", "card");     
-        return "card";
+        return "/card";
 
 }
+//    
+//      @GetMapping("/journalPassHandOut")
+//    public String getJournalPassHandOut(Model model) {
+//       Iterable<JournalPassHandOut> journals = journalPassHandOutRepo.findAll();
+//        model.addAttribute("journal", journals);        
+//        return "journalPassHandOut";
+//    }
+    
+
+    
 }
+

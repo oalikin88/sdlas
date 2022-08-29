@@ -22,7 +22,7 @@ public class StorageMapper {
     
     public Storage StorageDtoToStorage(StorageDto dto) throws ParseException {
         
-        Storage storage = null;
+        Storage storage;
        // писать if
 
        if(dto.name.equals("ngmd")) {
