@@ -112,7 +112,7 @@
                      
                        
                          <div class="col-sm-10">
-                        <select id="employee-select" class="selectized" placeholder="Выберите работника">
+                        <select id="employee-select" name="user" class="selectized" placeholder="Выберите работника">
 
                         <#items as employee>
                           <option selected></option>

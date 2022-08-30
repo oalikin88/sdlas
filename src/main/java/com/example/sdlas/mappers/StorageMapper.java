@@ -8,10 +8,14 @@ import com.example.sdlas.entities.Card;
 import com.example.sdlas.entities.Hdd;
 import com.example.sdlas.entities.Storage;
 import com.example.sdlas.entities.Usb;
+import com.example.sdlas.entities.User;
 import com.example.sdlas.model.StorageDto;
+import com.example.sdlas.model.UserDto;
 import java.text.ParseException;
 import java.util.Date;
 import org.springframework.stereotype.Component;
+import com.example.sdlas.repositories.UserRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -20,10 +24,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class StorageMapper {
     
+    @Autowired
+    private UserRepo userRepo;
+    
     public Storage StorageDtoToStorage(StorageDto dto) throws ParseException {
         
         Storage storage;
        // писать if
+       
+      
 
        if(dto.name.equals("ngmd")) {
            storage = new Hdd();
@@ -82,6 +91,25 @@ public class StorageMapper {
             storage.setComment(dto.comment);
         } else {
             storage.setComment("отсутствует");
+        }
+        
+        if(dto.user != null) {
+            UserDto userDto = UserMapper.getUserData(dto.user);
+            if(userRepo.findByEmail(userDto.email) != null) {
+                User user = userRepo.findByEmail(userDto.email);
+                storage.setUser(user);
+            } else {
+                User newUser = new User();
+                newUser.setEmail(userDto.email);
+                newUser.setLastName(userDto.lastName);
+                newUser.setFathersName(userDto.fathersName);
+                newUser.setEmail(userDto.email);
+                storage.setUser(newUser);
+            }
+            
+        } else {
+            User newUser = new User();
+            storage.setUser(newUser);
         }
         
         storage.setSignEmployee(false);

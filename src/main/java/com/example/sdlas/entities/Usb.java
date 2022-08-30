@@ -22,9 +22,11 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Usb extends Storage implements Serializable {
 
-    public Usb(String number, Date dateRegistration, String type, String tag, String manufactureNumber, String capacity, String fromPlace, String pcNumber, boolean signEmployee, boolean signToBack, String registrationEndSign, String comment) {
-        super(number, dateRegistration, type, tag, manufactureNumber, capacity, fromPlace, pcNumber, signEmployee, signToBack, registrationEndSign, comment);
+    public Usb(String number, Date dateRegistration, String type, String tag, String manufactureNumber, String capacity, String fromPlace, String pcNumber, boolean signEmployee, User user, Date dateSign, boolean signToBack, String registrationEndSign, String comment) {
+        super(number, dateRegistration, type, tag, manufactureNumber, capacity, fromPlace, pcNumber, signEmployee, user, dateSign, signToBack, registrationEndSign, comment);
     }
+
+
     
     
     

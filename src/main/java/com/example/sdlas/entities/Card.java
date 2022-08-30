@@ -21,12 +21,14 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Card extends Storage implements Serializable {
-    
+
+    public Card(String number, Date dateRegistration, String type, String tag, String manufactureNumber, String capacity, String fromPlace, String pcNumber, boolean signEmployee, User user, Date dateSign, boolean signToBack, String registrationEndSign, String comment) {
+        super(number, dateRegistration, type, tag, manufactureNumber, capacity, fromPlace, pcNumber, signEmployee, user, dateSign, signToBack, registrationEndSign, comment);
+    }
+   
    
 
-    public Card(String number, Date dateRegistration, String type, String tag, String manufactureNumber, String capacity, String fromPlace, String pcNumber, boolean signEmployee, boolean signToBack, String registrationEndSign, String comment) {
-        super(number, dateRegistration, type, tag, manufactureNumber, capacity, fromPlace, pcNumber, signEmployee, signToBack, registrationEndSign, comment);
-    }
+    
 
   
   

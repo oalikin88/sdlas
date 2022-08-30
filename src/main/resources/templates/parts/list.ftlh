@@ -6,7 +6,6 @@
   <caption class="text-center">${name}</caption>
   <thead class="table-light">
     <tr class="align-middle text-center">
-
       <th scope="col">id</th>
       <th scope="col">Учётный номер</th>
       <th scope="col">Дата постановки на учёт</th>
@@ -27,7 +26,6 @@
   <tbody>
 <#items as item>
     <tr class="text-end">
-
       <th>${item.id}</th>
       <td>${item.number}</td>
       <td>${item.dateRegistration?date?string["dd.MM.yyyy"]}</td>
@@ -36,8 +34,8 @@
       <td>${item.manufactureNumber}</td>
       <td>${item.capacity}</td>
       <td>${item.fromPlace}</td>
-      <td>${item.pcNumber}</td>
-      <td>${item.signEmployee?c}</td>
+      <td>${item.pcNumber}</td>     
+      <td>${item.signEmployee?c}</td>  
       <td>${item.signToBack?c}</td>
       <td>${item.registrationEndSign}</td>
       <td>${item.comment}</td>     

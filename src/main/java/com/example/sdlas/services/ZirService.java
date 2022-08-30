@@ -37,7 +37,7 @@ public class ZirService {
        String[][] emp = GetSelect("select FAM_EM, NAM_EM, OTCH_EM, EMAIL_EM from EMPLOYEES");
         List<String> list = new ArrayList<>();
         for(String[] strings : emp) {
-            list.add(strings[0] + " " + strings[1] + " " + strings[2] + ",  E-mail: " + strings[3]);
+            list.add(strings[0] + " " + strings[1] + " " + strings[2] + ", " + strings[3]);
         }
         return list;
     }

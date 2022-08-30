@@ -34,6 +34,7 @@ public class StorageDto {
     public String registrationEndSign;
     public String comment;
     public String name;
+    public String user;
     
 
 
