@@ -100,7 +100,7 @@ public class StorageMapper {
                 storage.setUser(user);
             } else {
                 User newUser = new User();
-                newUser.setEmail(userDto.email);
+                newUser.setFirstName(userDto.firstName);
                 newUser.setLastName(userDto.lastName);
                 newUser.setFathersName(userDto.fathersName);
                 newUser.setEmail(userDto.email);
