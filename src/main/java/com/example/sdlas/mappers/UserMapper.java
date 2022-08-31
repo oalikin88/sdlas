@@ -19,7 +19,7 @@ public class UserMapper implements UnboxingZirData {
       
         int count = 0;
         String s = "";
-        String[] buf = new String[4];
+        String[] buf = new String[5];
         char[] array = fioFromZir.toCharArray();
         char a = ' ';
         char b = ',';
@@ -46,10 +46,11 @@ public class UserMapper implements UnboxingZirData {
             
         }
         
-        dto.lastName = buf[0];
-        dto.firstName = buf[1];
-        dto.fathersName = buf[2];
-        dto.email = buf[3];
+        dto.id = buf[0];
+        dto.lastName = buf[1];
+        dto.firstName = buf[2];
+        dto.fathersName = buf[3];
+        dto.email = buf[4];
         
     return dto;
     }

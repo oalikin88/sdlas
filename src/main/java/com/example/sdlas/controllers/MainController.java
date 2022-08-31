@@ -13,12 +13,14 @@ import com.example.sdlas.model.StorageDto;
 import com.example.sdlas.repositories.CardRepo;
 import com.example.sdlas.repositories.HddRepo;
 import com.example.sdlas.repositories.UsbRepo;
+import com.example.sdlas.services.SendMailService;
 import com.example.sdlas.services.StorageService;
 import com.example.sdlas.services.ZirService;
 import java.text.ParseException;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,6 +46,9 @@ public class MainController {
     private StorageMapper storageMapper;
     @Autowired
     private ZirService zirService;
+    @Autowired
+    private SendMailService sendMailService;
+   
 
     
 
@@ -82,7 +87,9 @@ public class MainController {
       // строки выше для того, чтобы вытаскивать пользователя
         
         Storage storage = storageMapper.StorageDtoToStorage(dto);
+        
         storageService.saveInDb(storage);
+        sendMailService.sendMail(storage);
 
         
         

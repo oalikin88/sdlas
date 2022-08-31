@@ -34,13 +34,18 @@ import java.util.Map;
 public class ZirService {
 
     public List<String> findAllEmployees() {
-       String[][] emp = GetSelect("select FAM_EM, NAM_EM, OTCH_EM, EMAIL_EM from EMPLOYEES");
+       String[][] emp = GetSelect("select ID_EM, FAM_EM, NAM_EM, OTCH_EM, EMAIL_EM from EMPLOYEES");
         List<String> list = new ArrayList<>();
         for(String[] strings : emp) {
-            list.add(strings[0] + " " + strings[1] + " " + strings[2] + ", " + strings[3]);
+            list.add(strings[0] + " " + strings[1] + " " + strings[2] + " " + strings[3] + ", " + strings[4]);
         }
         return list;
     }
+    
+    
+//    public String findEmailEmployeeByFio(String fio) {
+//        String[][] emp = GetSelect("select FAM_EM, NAM_EM, OTCH_EM, EMAIL_EM from EMPLOYEES");
+//    }
     
 //    public Map<String,String> getFindAllOtdel(){
 //        String[][] S = GetSelect("select ID_POD, NAME_POD from podrazd");
@@ -87,15 +92,15 @@ public class ZirService {
 //        return users;
 //    }
 //
-//    public String getEmailUserById (int id_zir){
-//        String[][] S = GetSelect("SELECT e.ID_EM, " +
-//                "CONCAT(CONCAT(CONCAT(e.FAM_EM, CONCAT(' ', SUBSTR(e.NAM_EM, 1, 1))),'.'), CONCAT(SUBSTR(e.OTCH_EM, 1, 1),'.')) as NAME, " +
-//                "e.EMAIL_EM, e.FAM_EM, e.NAM_EM, e.OTCH_EM, p.ID_POD ID_POD,  p.NAME_POD NAME_POD " +
-//                "FROM DB2ADMIN.EMPLOYEES e, DB2ADMIN.PODRAZD p, POSTS po " +
-//                "WHERE e.ID_POD_EM = p.ID_POD " +
-//                "AND po.ID_POST = e.ID_POST_EM  AND e.ID_EM=" + id_zir + "");
-//        return S[0][2];
-//    }
+    public String getEmailUserById (int id_zir){
+        String[][] S = GetSelect("SELECT e.ID_EM, " +
+                "CONCAT(CONCAT(CONCAT(e.FAM_EM, CONCAT(' ', SUBSTR(e.NAM_EM, 1, 1))),'.'), CONCAT(SUBSTR(e.OTCH_EM, 1, 1),'.')) as NAME, " +
+                "e.EMAIL_EM, e.FAM_EM, e.NAM_EM, e.OTCH_EM, p.ID_POD ID_POD,  p.NAME_POD NAME_POD " +
+                "FROM DB2ADMIN.EMPLOYEES e, DB2ADMIN.PODRAZD p, POSTS po " +
+                "WHERE e.ID_POD_EM = p.ID_POD " +
+                "AND po.ID_POST = e.ID_POST_EM  AND e.ID_EM=" + id_zir + "");
+        return S[0][2];
+    }
 //    public String getNameUserById (int id_zir){
 //        String[][] S = GetSelect("SELECT e.ID_EM, " +
 //                "CONCAT(CONCAT(CONCAT(e.FAM_EM, CONCAT(' ', SUBSTR(e.NAM_EM, 1, 1))),'.'), CONCAT(SUBSTR(e.OTCH_EM, 1, 1),'.')) as NAME, " +

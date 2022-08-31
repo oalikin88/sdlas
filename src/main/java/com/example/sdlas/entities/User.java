@@ -29,6 +29,7 @@ public class User {
     private String lastName;
     private String fathersName;
     private String email;
+    private String idZir;
     private boolean status;
     private Role role;
 }

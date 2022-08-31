@@ -9,6 +9,8 @@ package com.example.sdlas.model;
  * @author 041AlikinOS
  */
 public class UserDto {
+    
+    public String id;
     public String firstName;
     public String lastName;
     public String fathersName;

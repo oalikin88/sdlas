@@ -35,7 +35,7 @@
       <td>${item.capacity}</td>
       <td>${item.fromPlace}</td>
       <td>${item.pcNumber}</td>     
-      <td>${item.signEmployee?c}</td>  
+      <td>${item.user.lastName} ${item.user.firstName[0]}. ${item.user.fathersName[0]}., ${item.signEmployee?c}</td>  
       <td>${item.signToBack?c}</td>
       <td>${item.registrationEndSign}</td>
       <td>${item.comment}</td>     
