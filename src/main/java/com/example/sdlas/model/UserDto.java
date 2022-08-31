@@ -10,7 +10,7 @@ package com.example.sdlas.model;
  */
 public class UserDto {
     
-    public String id;
+    public Integer id;
     public String firstName;
     public String lastName;
     public String fathersName;

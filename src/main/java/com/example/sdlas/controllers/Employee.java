@@ -4,29 +4,45 @@
  */
 package com.example.sdlas.controllers;
 
+import com.example.sdlas.entities.Hdd;
+import com.example.sdlas.entities.User;
+import com.example.sdlas.repositories.UserRepo;
+import com.example.sdlas.services.RequestService;
 import com.example.sdlas.services.ZirService;
 import java.util.List;
-import java.util.Map;
+import org.opfr.springbootstarterauthsso.security.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
  * @author 041AlikinOS
  */
-@Controller
+@RestController
 public class Employee {
     
     @Autowired
-    private ZirService zirService;
+    private RequestService requestService;
+    @Autowired
+    private ZirService ZirService;
+    @Autowired
+    private UserRepo userRepo;
          
-    @GetMapping("/employees")
-    public String getEmployee(Model model) {
-       Iterable<String> emp = zirService.findAllEmployees();
-       model.addAttribute("employee", emp);
-        return "employees";
+    @GetMapping("/account")
+    public List<Hdd> getData(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserInfo userDetails = (UserInfo) authentication.getPrincipal();
+        String notParseId = userDetails.getUserCode();
+        int id = Integer.parseInt(notParseId);
+        String emailUser = ZirService.getEmailUserById(id);
+        User user = userRepo.findByEmail(emailUser);
+       List<Hdd> hdd = requestService.getAllDevices(user);
+   //    model.addAttribute("hdd", hdd);
+        return hdd;
     }
     
 }

@@ -5,7 +5,8 @@
 package com.example.sdlas.repositories;
 
 import com.example.sdlas.entities.Hdd;
-import org.springframework.data.repository.CrudRepository;
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Repository;
  * @author 041AlikinOS
  */
 @Repository
-public interface HddRepo extends CrudRepository<Hdd, Long> {
+public interface HddRepo extends JpaRepository<Hdd, Long> {
+    
+    public List<Hdd> findHddByUserIdZir(int id);
     
 }

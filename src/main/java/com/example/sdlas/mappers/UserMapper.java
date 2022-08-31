@@ -45,8 +45,8 @@ public class UserMapper implements UnboxingZirData {
             
             
         }
-        
-        dto.id = buf[0];
+        int i = Integer.parseInt(buf[0]);
+        dto.id = i;
         dto.lastName = buf[1];
         dto.firstName = buf[2];
         dto.fathersName = buf[3];
