@@ -30,6 +30,7 @@ public class StorageDto {
     public String fromPlace;
     public String pcNumber;
     public boolean signEmployee;
+     
     public boolean signToBack;
     public String registrationEndSign;
     public String comment;

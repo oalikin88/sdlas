@@ -42,7 +42,7 @@ private ZirService zirService;
             simpleMailMessage.setFrom(emailSender);
             simpleMailMessage.setTo(email);
             simpleMailMessage.setSubject("Подпись за получение " + storage.getType());
-            simpleMailMessage.setText("Добрый день, " + storage.getUser().getFirstName() + " " + storage.getUser().getFathersName() + ", вам передано устройство: " + storage.getType() + ", имеющее инвентарный №:" + storage.getNumber() + ". Для того, чтобы поставить отметку о получении данного устройства пройдите по ссылке:" + "http://10.41.200.15:8080/main" + " \n\n\n\n\nС уважением, " + userDetails.getFio());
+            simpleMailMessage.setText("Добрый день, " + storage.getUser().getFirstName() + " " + storage.getUser().getFathersName() + ", вам передано устройство: " + storage.getType() + ", имеющее инвентарный №:" + storage.getNumber() + ". Для того, чтобы поставить отметку о получении данного устройства пройдите по ссылке:" + "http://10.41.200.15:8080/myaccount" + " \n\n\n\n\nС уважением, " + userDetails.getFio());
      
 
             javaMailSender.send(simpleMailMessage);

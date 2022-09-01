@@ -8,19 +8,28 @@ import com.example.sdlas.entities.Card;
 import com.example.sdlas.entities.Hdd;
 import com.example.sdlas.entities.Storage;
 import com.example.sdlas.entities.Usb;
+import com.example.sdlas.entities.User;
 import com.example.sdlas.mappers.StorageMapper;
+import com.example.sdlas.model.SignDto;
 import com.example.sdlas.model.StorageDto;
 import com.example.sdlas.repositories.CardRepo;
 import com.example.sdlas.repositories.HddRepo;
 import com.example.sdlas.repositories.UsbRepo;
+import com.example.sdlas.repositories.UserRepo;
+import com.example.sdlas.services.RequestService;
 import com.example.sdlas.services.SendMailService;
+import com.example.sdlas.services.SignStorageService;
 import com.example.sdlas.services.StorageService;
 import com.example.sdlas.services.ZirService;
 import java.text.ParseException;
+import java.util.List;
 import java.util.Map;
+import org.opfr.springbootstarterauthsso.security.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,6 +57,12 @@ public class MainController {
     private ZirService zirService;
     @Autowired
     private SendMailService sendMailService;
+    @Autowired
+    private UserRepo userRepo;
+    @Autowired
+    private RequestService requestService;
+    @Autowired
+    private SignStorageService signStorageService;
    
 
     
@@ -157,6 +172,36 @@ public class MainController {
         return "/card";
 
 }
+    @GetMapping("/myaccount")
+    public String getData(Model model) {
+        
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserInfo userDetails = (UserInfo) authentication.getPrincipal();
+        String notParseId = userDetails.getUserCode();
+        int id = Integer.parseInt(notParseId);
+        String emailUser = zirService.getEmailUserById(id);
+        User user = userRepo.findByEmail(emailUser);
+        Iterable <Hdd> hddies = requestService.getAllDevices(user);
+        model.addAttribute("hdd", hddies);
+        return "account";
+    }
+    
+     @PostMapping("/myaccount")
+     public String putSign(SignDto dto, Model model) {
+        model.addAttribute("dto", dto);
+        signStorageService.signEmpoyeeForStorage(dto);
+        
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserInfo userDetails = (UserInfo) authentication.getPrincipal();
+        String notParseId = userDetails.getUserCode();
+        int id = Integer.parseInt(notParseId);
+        String emailUser = zirService.getEmailUserById(id);
+        User user = userRepo.findByEmail(emailUser);
+        Iterable <Hdd> hddies = requestService.getAllDevices(user);
+        model.addAttribute("hdd", hddies);
+        
+        return "account";
+    }
 //    
 //      @GetMapping("/journalPassHandOut")
 //    public String getJournalPassHandOut(Model model) {
