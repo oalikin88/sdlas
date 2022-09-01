@@ -43,7 +43,13 @@ public class StorageDto {
     
     public Date getConvertedDate() throws ParseException {
         Date currentDate;
-        currentDate = dateFormat.parse(dateRegistration);
+        try {
+            currentDate = dateFormat.parse(dateRegistration);
+        } catch (ParseException e) {
+            currentDate = new Date();
+            System.out.println(e.getMessage());
+        }
+        
         return currentDate;
     }
     

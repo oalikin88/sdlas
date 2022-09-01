@@ -39,11 +39,41 @@
         <#if item.signEmployee?c == "false"> <p style="color:red;">ожидается подпись</p>
         <#else>
             <p style="color:green;">подписано</p>
-             ${item.dateSign}
+            ${item.dateSign?string["dd.MM.yyyy в HH:mm"]}
         </#if>
       </td>  
-      <td>${item.signToBack?c}</td>
-      <td>${item.registrationEndSign}</td>
+      <td><#if item.signToBack?c == "false">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sign">
+ Подписать
+</button>
+</#if>
+<!-- Modal -->
+<div class="modal fade" id="sign" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <form method="post" action="/myaccount">
+       <p>${item.id}</p>
+         <input type="hidden" id="sign" name="sign" value="true">
+         <input type="hidden" id="Id" name="Id" value="${item.id}">
+            <div class="row mb-3">
+                        <label for="registrationEndSign" class="col col-form-label">Отметка о снятии с учета, номер документа:</label>
+                        <div class="col">
+                        <input type="text" class="form-control" name="registrationEndSign" placeholder="Укажите номер документа" />
+                        </div>
+                        </div>
+      Подписать?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+        <button type="submit" class="btn btn-primary">Да</button>
+  </form> 
+</td>
+      <td>${item.registrationEndSign!}</td>
       <td>${item.comment}</td>     
     </tr>
 </#items>

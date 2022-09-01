@@ -46,7 +46,7 @@ public class StorageMapper {
         if(dto.number != null) {
             storage.setNumber(dto.number);
         } else {
-            storage.setNumber("отсутствует");
+            storage.setNumber("");
         }
         
         if(dto.dateRegistration != null) {
@@ -58,39 +58,48 @@ public class StorageMapper {
         
         if(dto.type != null) {
             storage.setType(dto.type);
+        } else {
+            storage.setType("");
         }
         
         if(dto.tag != null) {
             storage.setTag(dto.tag);
+        } else {
+            storage.setTag("");
         }
         
         if(dto.manufactureNumber != null) {
             storage.setManufactureNumber(dto.manufactureNumber);
+        } else {
+            storage.setManufactureNumber("");
         }
         
         if(dto.capacity != null) {
             storage.setCapacity(dto.capacity);
         } else {
-            storage.setCapacity("отсутствует");
+            storage.setCapacity("");
         }
         
         if(dto.fromPlace != null) {
             storage.setFromPlace(dto.fromPlace);
+        } else {
+            storage.setFromPlace("");
         }
         
         if(dto.pcNumber != null) {
             storage.setPcNumber(dto.pcNumber);
         } else {
-            storage.setPcNumber("отсутствует");
+            storage.setPcNumber("");
         }
         
         if(dto.registrationEndSign != null) {
             storage.setRegistrationEndSign(dto.registrationEndSign);
         }
+        
         if(dto.comment != null) {
             storage.setComment(dto.comment);
         } else {
-            storage.setComment("отсутствует");
+            storage.setComment("");
         }
         
         if(dto.user != null) {

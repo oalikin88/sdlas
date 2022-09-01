@@ -88,12 +88,7 @@
                         <input type="text" class="form-control" name="pcNumber" placeholder="Укажите инвентарный №" />
                         </div>
                         </div>
-                    <div class="row mb-3">
-                        <label for="registrationEndSign" class="col-sm-2 col-form-label">Отметка о снятии с учета, номер документа:</label>
-                        <div class="col-sm-10">
-                        <input type="text" class="form-control" name="registrationEndSign" placeholder="Укажите номер документа" />
-                        </div>
-                        </div>
+                    
                         <div class="row mb-3">
 
                        <script>
