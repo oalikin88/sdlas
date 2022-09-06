@@ -4,9 +4,9 @@
  */
 package com.example.sdlas.services;
 
-import com.example.sdlas.entities.Hdd;
+import com.example.sdlas.entities.JournalStorage;
 import com.example.sdlas.model.SignDto;
-import com.example.sdlas.repositories.HddRepo;
+import com.example.sdlas.repositories.JournalStorageRepo;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,16 +19,30 @@ import org.springframework.stereotype.Service;
 public class SignStorageService {
     
     @Autowired
-    private HddRepo hddRepo;
+    private JournalStorageRepo journalStorageRepo;
     
     
     public void signEmpoyeeForStorage(SignDto dto) {
         
-        Hdd hdd = hddRepo.findById(dto.Id).get();
-        hdd.setSignEmployee(true);
-        hdd.setDateSign(new Date());
+        JournalStorage journalStorage = journalStorageRepo.findById(dto.Id).get();
+        journalStorage.setSignEmployee(true);
+        journalStorage.setDateSignEmployee(new Date());
         
         
-        hddRepo.save(hdd);
+        journalStorageRepo.save(journalStorage);
+    }
+    
+    public void signSecurityWorker(SignDto dto) {
+        JournalStorage journalStorage = journalStorageRepo.findById(dto.Id).get();
+        journalStorage.setSignToBack(true);
+        journalStorage.setGetBackToSecurityUser(new Date());
+        if(!dto.registrationEndSign.isBlank() || !dto.registrationEndSign.isEmpty()) {
+            journalStorage.setRegistrationEndSign(dto.registrationEndSign);
+        } else {
+            journalStorage.setRegistrationEndSign("");
+        }
+        
+        
+        journalStorageRepo.save(journalStorage);
     }
 }

@@ -4,7 +4,7 @@
 <@c.page>
 
 
-<@l.list hdd hdd />
+<@l.list journalStorage journalStorage />
 
 
 

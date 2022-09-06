@@ -43,6 +43,7 @@
                         <label for="number" class="col-sm-2 col-form-label">Учётный номер:</label>
                         <div class="col-sm-10">
                         <input type="hidden" name="name" value="${path}" >
+                        <input type="hidden" name="storageType" value="${storageType}">
                         <input type="text" class="form-control" name="number" placeholder="Введите учётный номер" />      
                         </div>
                         </div>
@@ -107,7 +108,7 @@
                      
                        
                          <div class="col-sm-10">
-                        <select id="employee-select" name="user" class="selectized" placeholder="Выберите работника">
+                        <select id="employee-select" name="employeeFio" class="selectized" placeholder="Выберите работника">
 
                         <#items as employee>
                           <option selected></option>

@@ -4,16 +4,12 @@
  */
 package com.example.sdlas.entities;
 
+import com.example.sdlas.model.StorageType;
 import java.util.Date;
-import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
-import javax.persistence.ForeignKey;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,11 +18,11 @@ import lombok.Setter;
  *
  * @author 041AlikinOS
  */
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@MappedSuperclass
-public abstract class Storage {
+public class Storage {
 
     
     @Id
@@ -40,16 +36,9 @@ public abstract class Storage {
     private String capacity;
     private String fromPlace;
     private String pcNumber;
-    private boolean signEmployee;
-    @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "usr_id", foreignKey = @ForeignKey(name = "USR_ID_FK"))
-    private User user;
-    private Date dateSign;
-    private boolean signToBack;
-    private String registrationEndSign;
-    private String comment;
+    private StorageType storageType;
 
-    public Storage(String number, Date dateRegistration, String type, String tag, String manufactureNumber, String capacity, String fromPlace, String pcNumber, boolean signEmployee, User user, Date dateSign, boolean signToBack, String registrationEndSign, String comment) {
+    public Storage(String number, Date dateRegistration, String type, String tag, String manufactureNumber, String capacity, String fromPlace, String pcNumber, StorageType storageType) {
         this.number = number;
         this.dateRegistration = dateRegistration;
         this.type = type;
@@ -58,15 +47,9 @@ public abstract class Storage {
         this.capacity = capacity;
         this.fromPlace = fromPlace;
         this.pcNumber = pcNumber;
-        this.signEmployee = signEmployee;
-        this.user = user;
-        this.dateSign = dateSign;
-        this.signToBack = signToBack;
-        this.registrationEndSign = registrationEndSign;
-        this.comment = comment;
+        this.storageType = storageType;
     }
-
-
-        
+ 
+    
     
 }

@@ -16,7 +16,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class StorageDto {
+public class JournalStorageDto {
     
     public static final SimpleDateFormat dateFormat
       = new SimpleDateFormat("yyyy-MM-dd");
@@ -24,18 +24,16 @@ public class StorageDto {
     public String number;
     public String dateRegistration;
     public String type;
+    public String storageType;
     public String tag;
     public String manufactureNumber;
     public String capacity;
     public String fromPlace;
     public String pcNumber;
-    public boolean signEmployee;
-     
-    public boolean signToBack;
-    public String registrationEndSign;
-    public String comment;
     public String name;
-    public String user;
+    public String comment;
+    public String employeeFio;
+   
     
 
 

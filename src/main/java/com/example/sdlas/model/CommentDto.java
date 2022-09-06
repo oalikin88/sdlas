@@ -4,22 +4,13 @@
  */
 package com.example.sdlas.model;
 
-import java.util.Date;
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  *
  * @author 041AlikinOS
  */
-@Getter
-@Setter
-public class SignDto {
+public class CommentDto {
     
-    public Long Id;
-    public boolean sign;
-    public Date dateSign;
-    public String registrationEndSign;
-    
+    public Long id;
+    public String comment;
     
 }

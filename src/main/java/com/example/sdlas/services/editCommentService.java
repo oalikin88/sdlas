@@ -5,28 +5,25 @@
 package com.example.sdlas.services;
 
 import com.example.sdlas.entities.JournalStorage;
-import com.example.sdlas.entities.User;
+import com.example.sdlas.model.CommentDto;
 import com.example.sdlas.repositories.JournalStorageRepo;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  *
  * @author 041AlikinOS
  */
-@Service
-public class RequestService {
+public class editCommentService {
     
-   @Autowired
-   private JournalStorageRepo journalStorageRepo;
-   
-   
-    public List<JournalStorage> getAllDevices(User user) {
-        long id = user.getId();
+    @Autowired
+    private JournalStorageRepo journalStorageRepo;
+    
+    public void editComment(CommentDto dto) {
         
+        JournalStorage journalStorage = journalStorageRepo.getById(dto.id);
+        journalStorage.setComment(dto.comment);
+        journalStorageRepo.save(journalStorage);
         
-        return journalStorageRepo.findByEmployeeId(id);
     }
     
 }

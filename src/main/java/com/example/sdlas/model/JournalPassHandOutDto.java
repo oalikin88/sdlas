@@ -4,7 +4,7 @@
  */
 package com.example.sdlas.model;
 
-import static com.example.sdlas.model.StorageDto.dateFormat;
+import static com.example.sdlas.model.JournalStorageDto.dateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;

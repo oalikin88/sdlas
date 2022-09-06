@@ -8,6 +8,6 @@
 <@buttons.buttons name path />
 
 
-<@list.list hdd hdd />
+<@list.list journalStorage journalStorage />
 
 </@c.page>

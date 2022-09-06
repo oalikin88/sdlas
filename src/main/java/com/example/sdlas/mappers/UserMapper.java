@@ -4,15 +4,17 @@
  */
 package com.example.sdlas.mappers;
 
-import com.example.sdlas.interfaces.UnboxingZirData;
 import com.example.sdlas.model.UserDto;
+import org.opfr.springbootstarterauthsso.security.UserInfo;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 
 /**
  *
  * @author 041AlikinOS
  */
-public class UserMapper implements UnboxingZirData {
+public class UserMapper  {
     
     public static UserDto getUserData(String fioFromZir) {
         UserDto dto = new UserDto();
@@ -45,7 +47,7 @@ public class UserMapper implements UnboxingZirData {
             
             
         }
-        int i = Integer.parseInt(buf[0]);
+        Integer i = Integer.parseInt(buf[0]);
         dto.id = i;
         dto.lastName = buf[1];
         dto.firstName = buf[2];
@@ -53,6 +55,15 @@ public class UserMapper implements UnboxingZirData {
         dto.email = buf[4];
         
     return dto;
+    }
+    
+    public static UserDto getEmployeeSecurity() {
+        
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserInfo userDetails = (UserInfo) authentication.getPrincipal();
+        String fio = userDetails.getUserCode() + " " + userDetails.getFio();
+        UserDto dto = getUserData(fio);
+        return dto;
     }
     
 }

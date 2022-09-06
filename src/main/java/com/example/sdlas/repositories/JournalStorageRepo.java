@@ -4,18 +4,16 @@
  */
 package com.example.sdlas.repositories;
 
-import com.example.sdlas.entities.Hdd;
+import com.example.sdlas.entities.JournalStorage;
+import com.example.sdlas.model.StorageType;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author 041AlikinOS
  */
-@Repository
-public interface HddRepo extends JpaRepository<Hdd, Long> {
-    
-    public List<Hdd> findHddByUserIdZir(int id);
-    
+public interface JournalStorageRepo extends JpaRepository<JournalStorage, Long> {
+    List<JournalStorage> findByEmployeeId(Long id);
+    List<JournalStorage> findByStorageStorageType(StorageType type);
 }

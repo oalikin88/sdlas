@@ -4,10 +4,15 @@
  */
 package com.example.sdlas.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  *
  * @author 041AlikinOS
  */
+@Getter
+@Setter
 public class UserDto {
     
     public Integer id;

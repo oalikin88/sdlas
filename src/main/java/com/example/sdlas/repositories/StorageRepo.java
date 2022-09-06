@@ -4,13 +4,14 @@
  */
 package com.example.sdlas.repositories;
 
-import com.example.sdlas.entities.Usb;
-import org.springframework.data.repository.CrudRepository;
+import com.example.sdlas.entities.Storage;
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author 041AlikinOS
  */
-public interface UsbRepo extends CrudRepository<Usb, Long>{
-    
+public interface StorageRepo extends JpaRepository<Storage, Long> {
+   
 }

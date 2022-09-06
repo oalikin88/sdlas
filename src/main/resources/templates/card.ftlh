@@ -6,6 +6,6 @@
 
 <@buttons.buttons name path />
 
-<@list.list card card />
+<@list.list journalStorage journalStorage />
 
 </@c.page>
