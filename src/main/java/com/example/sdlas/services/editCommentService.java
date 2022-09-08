@@ -8,12 +8,14 @@ import com.example.sdlas.entities.JournalStorage;
 import com.example.sdlas.model.CommentDto;
 import com.example.sdlas.repositories.JournalStorageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author 041AlikinOS
  */
-public class editCommentService {
+@Component
+public class EditCommentService {
     
     @Autowired
     private JournalStorageRepo journalStorageRepo;
