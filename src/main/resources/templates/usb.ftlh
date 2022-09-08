@@ -6,7 +6,7 @@
 
 <@buttons.buttons name path />
 
-<@list.list usb usb />
+<@list.list journalStorageDto journalStorageDto />
 
 </@c.page>
 

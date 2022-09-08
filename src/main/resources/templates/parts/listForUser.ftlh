@@ -26,13 +26,13 @@
 <#assign index = index+1>
     <tr class="text-end">
       <th>${index}</th>
-      <td>${item.storage.number}</td>
-      <td>${item.storage.type}</td>
-      <td>${item.storage.tag}</td>
-      <td>${item.storage.manufactureNumber}</td>
-      <td>${item.storage.capacity}</td>
-      <td>${item.storage.pcNumber}</td>     
-      <td>${item.employee.lastName} ${item.employee.firstName[0]}. ${item.employee.fathersName[0]}., 
+      <td>${item.number}</td>
+      <td>${item.type}</td>
+      <td>${item.tag}</td>
+      <td>${item.manufactureNumber}</td>
+      <td>${item.capacity}</td>
+      <td>${item.pcNumber}</td>     
+      <td>${item.employee} 
 <#if item.signEmployee?c == "false">
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sign${index}">
  Подписать
@@ -47,7 +47,7 @@
       </div>
       <div class="modal-body">
       <form method="post" action="/myaccount">
-       <p>Подписать устройство ${item.storage.type} с учётным номером ${item.storage.number}?</p>
+       <p>Подписать устройство ${item.type} с учётным номером ${item.number}?</p>
          <input type="hidden" name="sign" value="true">
          <input type="hidden" name="id" value="${item.id}">
       </div>

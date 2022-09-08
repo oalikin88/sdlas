@@ -4,10 +4,17 @@
  */
 package com.example.sdlas.model;
 
+import org.springframework.security.core.GrantedAuthority;
+
 /**
  *
  * @author 041AlikinOS
  */
-public enum Role {
+public enum Role implements GrantedAuthority {
     ADMIN, USER;
+
+    @Override
+    public String getAuthority() {
+        return name();
+    }
 }

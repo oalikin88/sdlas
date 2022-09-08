@@ -108,11 +108,11 @@
                      
                        
                          <div class="col-sm-10">
-                        <select id="employee-select" name="employeeFio" class="selectized" placeholder="Выберите работника">
+                        <select id="employee-select" name="employee" class="selectized" placeholder="Выберите работника">
 
                         <#items as employee>
                           <option selected></option>
-                          <option value="${employee}">${employee}</option>
+                          <option value="${employee.code}">${employee.surname} ${employee.name} ${employee.middlename}</option>
                           </#items>
 
                         </select>

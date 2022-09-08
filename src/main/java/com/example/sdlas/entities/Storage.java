@@ -35,10 +35,9 @@ public class Storage {
     private String manufactureNumber;
     private String capacity;
     private String fromPlace;
-    private String pcNumber;
     private StorageType storageType;
 
-    public Storage(String number, Date dateRegistration, String type, String tag, String manufactureNumber, String capacity, String fromPlace, String pcNumber, StorageType storageType) {
+    public Storage(String number, Date dateRegistration, String type, String tag, String manufactureNumber, String capacity, String fromPlace, StorageType storageType) {
         this.number = number;
         this.dateRegistration = dateRegistration;
         this.type = type;
@@ -46,9 +45,10 @@ public class Storage {
         this.manufactureNumber = manufactureNumber;
         this.capacity = capacity;
         this.fromPlace = fromPlace;
-        this.pcNumber = pcNumber;
         this.storageType = storageType;
     }
+
+
  
     
     

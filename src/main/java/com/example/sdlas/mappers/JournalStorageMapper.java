@@ -6,15 +6,14 @@ package com.example.sdlas.mappers;
 
 import com.example.sdlas.entities.JournalStorage;
 import com.example.sdlas.entities.Storage;
-import com.example.sdlas.entities.User;
 import com.example.sdlas.model.JournalStorageDto;
 import com.example.sdlas.model.StorageType;
-import com.example.sdlas.model.UserDto;
 import java.text.ParseException;
 import java.util.Date;
-import org.springframework.stereotype.Component;
-import com.example.sdlas.repositories.UserRepo;
+import org.opfr.springBootStarterDictionary.clientImpl.EmployeeClient;
+import org.opfr.springBootStarterDictionary.models.DictionaryEmployee;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
@@ -24,20 +23,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class JournalStorageMapper {
     
     @Autowired
-    private UserRepo userRepo;
+    private EmployeeClient employeeClient;
+    
+    
 
     
     public JournalStorage JournalStorageDtoToJournalStorage(JournalStorageDto dto) throws ParseException {
         
-        
-        User employee;
-        User securityEmployee;
-        UserDto employeeDto;
-        UserDto employeeSecurityDto;
+
         Storage storage = new Storage();
         JournalStorage journalStorage = new JournalStorage();
-       
-      
 
        if(dto.storageType.equals("HDD")) {
            storage.setStorageType(StorageType.HDD);
@@ -92,9 +87,9 @@ public class JournalStorageMapper {
         }
         
         if(dto.pcNumber != null) {
-            storage.setPcNumber(dto.pcNumber);
+            journalStorage.setPcNumber(dto.pcNumber);
         } else {
-            storage.setPcNumber("");
+            journalStorage.setPcNumber("");
         }
         
         
@@ -105,48 +100,66 @@ public class JournalStorageMapper {
             journalStorage.setComment("");
         }
         
-        if(dto.employeeFio != null) {
-            employeeDto = UserMapper.getUserData(dto.employeeFio);
-            if(userRepo.findByEmail(employeeDto.email) != null) {
-                employee = userRepo.findByEmail(employeeDto.email);
+        if(dto.employee != null) {
+           journalStorage.setEmployee(dto.employee);
                
             } else {
-                employee = new User();
-                employee.setEmail(employeeDto.email);
-                employee.setFirstName(employeeDto.firstName);
-                employee.setLastName(employeeDto.lastName);
-                employee.setFathersName(employeeDto.fathersName);
-                employee.setIdZir(employeeDto.id);
+                journalStorage.setEmployee("Пользователь не найден");
             }
             
+        if(dto.employeeSecurity != null) {
+            journalStorage.setSecurityEmployee(dto.employeeSecurity);
         } else {
-            employee = new User();
-            
+            journalStorage.setSecurityEmployee("Пользователь не найден");
         }
-        
-        
-            employeeSecurityDto = UserMapper.getEmployeeSecurity();
-            if(userRepo.findByEmail(employeeSecurityDto.email) != null) {
-                securityEmployee = userRepo.findByEmail(employeeSecurityDto.email);
-            } else { // временно 
-            securityEmployee = new User();
-            securityEmployee.setEmail(employeeSecurityDto.email);
-            securityEmployee.setFirstName(employeeSecurityDto.firstName);
-            securityEmployee.setLastName(employeeSecurityDto.lastName);
-            securityEmployee.setFathersName(employeeSecurityDto.fathersName);
-            securityEmployee.setIdZir(employeeSecurityDto.id);
-            
-        }
-            
+              
             
         journalStorage.setStorage(storage);
-        journalStorage.setEmployee(employee);
-        journalStorage.setSecurityEmployee(securityEmployee);
         journalStorage.setSignEmployee(false);
         journalStorage.setSignToBack(false);
         
         
     return journalStorage;
+    }
+    
+    public JournalStorageDto JournalStorageToJournalStorageDto(JournalStorage journalStorage) {
+        JournalStorageDto dto = new JournalStorageDto();
+        DictionaryEmployee employeeByCode = employeeClient.getEmployeeByCode(journalStorage.getEmployee());
+        DictionaryEmployee employeeSecurityByCode = employeeClient.getEmployeeByCode(journalStorage.getSecurityEmployee());
+        
+        dto.number = journalStorage.getStorage().getNumber();
+        dto.capacity = journalStorage.getStorage().getCapacity();
+        dto.dateRegistration = journalStorage.getStorage().getDateRegistration().toString();
+        dto.id = journalStorage.getId();
+        dto.employee = employeeByCode.getSurname() + " " + employeeByCode.getName().substring(0, 1) + ". " + employeeByCode.getMiddlename().substring(0, 1) + ".";
+        dto.employeeSecurity = employeeSecurityByCode.getSurname() + " " + employeeSecurityByCode.getName().substring(0, 1) + ". " + employeeSecurityByCode.getMiddlename().substring(0, 1) + ".";
+        dto.fromPlace = journalStorage.getStorage().getFromPlace();
+        dto.manufactureNumber = journalStorage.getStorage().getManufactureNumber();
+        dto.pcNumber = journalStorage.getPcNumber();
+        dto.storageType = journalStorage.getStorage().getType();
+        dto.tag = journalStorage.getStorage().getTag();
+        dto.type = journalStorage.getStorage().getType();
+        dto.signEmployee = journalStorage.isSignEmployee();
+        dto.signToBack = journalStorage.isSignToBack();
+        dto.comment = journalStorage.getComment();
+        dto.RegistrationEndSign = journalStorage.getRegistrationEndSign();
+        if(journalStorage.getGetBackToSecurityUser() != null) {
+            dto.getBackToSecurityUser = journalStorage.getGetBackToSecurityUser().toString();
+        } else {
+            dto.getBackToSecurityUser = "";
+        }
+        
+        if(journalStorage.getDateSignEmployee() != null) {
+            dto.dateSignEmployee = journalStorage.getDateSignEmployee().toString();
+        } else {
+            dto.dateSignEmployee = "";
+        }
+        
+        dto.storageType = journalStorage.getStorage().getStorageType().toString();
+      
+        
+        
+        return dto;
     }
     
 }

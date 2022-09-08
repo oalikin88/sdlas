@@ -20,7 +20,7 @@ public class JournalStorageDto {
     
     public static final SimpleDateFormat dateFormat
       = new SimpleDateFormat("yyyy-MM-dd");
-    
+    public Long id;
     public String number;
     public String dateRegistration;
     public String type;
@@ -30,9 +30,14 @@ public class JournalStorageDto {
     public String capacity;
     public String fromPlace;
     public String pcNumber;
-    public String name;
     public String comment;
-    public String employeeFio;
+    public String employee;
+    public String employeeSecurity;
+    public boolean signEmployee;
+    public boolean signToBack;
+    public String RegistrationEndSign;
+    public String getBackToSecurityUser;
+    public String dateSignEmployee;
    
     
 

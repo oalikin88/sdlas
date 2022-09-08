@@ -32,12 +32,8 @@ public class JournalStorage implements Serializable {
     private Long Id;
     private Date dateSignEmployee;
     private Date getBackToSecurityUser;
-    @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "employee_id")
-    private User employee;
-    @ManyToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "security_employee_id")
-    private User securityEmployee;
+    private String employee;
+    private String securityEmployee;
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "storage_id")
     private Storage storage;
@@ -45,8 +41,9 @@ public class JournalStorage implements Serializable {
     private boolean signToBack;
     private String RegistrationEndSign;
     private String comment;
+    private String pcNumber;
 
-    public JournalStorage(Date dateSignEmployee, Date getBackToSecurityUser, User employee, User securityEmployee, Storage storage, boolean signEmployee, boolean signToBack, String RegistrationEndSign, String comment) {
+    public JournalStorage(Date dateSignEmployee, Date getBackToSecurityUser, String employee, String securityEmployee, Storage storage, boolean signEmployee, boolean signToBack, String RegistrationEndSign, String comment, String pcNumber) {
         this.dateSignEmployee = dateSignEmployee;
         this.getBackToSecurityUser = getBackToSecurityUser;
         this.employee = employee;
@@ -56,7 +53,12 @@ public class JournalStorage implements Serializable {
         this.signToBack = signToBack;
         this.RegistrationEndSign = RegistrationEndSign;
         this.comment = comment;
+        this.pcNumber = pcNumber;
     }
+
+
+
+
     
     
     

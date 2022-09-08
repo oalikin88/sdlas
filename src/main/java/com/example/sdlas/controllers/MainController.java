@@ -5,19 +5,21 @@
 package com.example.sdlas.controllers;
 
 import com.example.sdlas.entities.JournalStorage;
-import com.example.sdlas.entities.User;
 import com.example.sdlas.mappers.JournalStorageMapper;
+import com.example.sdlas.model.CommentDto;
 import com.example.sdlas.model.SignDto;
 import com.example.sdlas.model.JournalStorageDto;
 import com.example.sdlas.model.StorageType;
 import com.example.sdlas.repositories.JournalStorageRepo;
-import com.example.sdlas.repositories.UserRepo;
-import com.example.sdlas.services.RequestService;
+import com.example.sdlas.services.EditCommentService;
+import com.example.sdlas.services.JournalStorageService;
 import com.example.sdlas.services.SendMailService;
 import com.example.sdlas.services.SignStorageService;
-import com.example.sdlas.services.ZirService;
 import java.text.ParseException;
+import java.util.List;
 import java.util.Map;
+import org.opfr.springBootStarterDictionary.clientImpl.EmployeeClient;
+import org.opfr.springBootStarterDictionary.models.DictionaryEmployee;
 import org.opfr.springbootstarterauthsso.security.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -41,42 +43,47 @@ public class MainController {
     @Autowired
     private JournalStorageMapper storageMapper;
     @Autowired
-    private ZirService zirService;
+    private EmployeeClient employeeClient;
     @Autowired
     private SendMailService sendMailService;
     @Autowired
-    private UserRepo userRepo;
-    @Autowired
-    private RequestService requestService;
-    @Autowired
     private SignStorageService signStorageService;
-
+    @Autowired
+    private EditCommentService editCommentService;
+    @Autowired
+    private JournalStorageService journalStorageService;
    
 
     
 
     @GetMapping("/{storageName}")
     public String ngmd(@PathVariable String storageName, Model model) {
+      
+        
         if(storageName.equals("ngmd")) {              
         model.addAttribute("storageType", "HDD");        
         model.addAttribute("name", "НЖМД");        
         model.addAttribute("path", "ngmd");
-        Iterable<JournalStorage> journalsStorage = journalStorageRepo.findByStorageStorageType(StorageType.HDD); 
-        model.addAttribute("journalStorage", journalsStorage); 
+        model.addAttribute("title", "Журнал учёта НЖМД");
+        List<JournalStorage> journalsStorage = journalStorageRepo.findByStorageStorageType(StorageType.HDD); 
+        List<JournalStorageDto> journalsStorageDto = journalStorageService.listDto(journalsStorage);
+        model.addAttribute("journalStorageDto", journalsStorageDto); 
         } else if(storageName.equals("card")){
         model.addAttribute("storageType", "CARD"); 
         model.addAttribute("name", "ключевой носитель");
         model.addAttribute("path", "card");
-        Iterable<JournalStorage> journalsStorage = journalStorageRepo.findByStorageStorageType(StorageType.CARD);
-        model.addAttribute("journalStorage", journalsStorage); 
+        List<JournalStorage> journalsStorage = journalStorageRepo.findByStorageStorageType(StorageType.CARD); 
+        List<JournalStorageDto> journalsStorageDto = journalStorageService.listDto(journalsStorage);
+        model.addAttribute("journalStorageDto", journalsStorageDto); 
         } else {
         model.addAttribute("storageType", "USB"); 
         model.addAttribute("name", "USB, CD, DVD");
         model.addAttribute("path", "usb");
-        Iterable<JournalStorage> journalsStorage = journalStorageRepo.findByStorageStorageType(StorageType.USB);
-        model.addAttribute("journalStorage", journalsStorage); 
+        List<JournalStorage> journalsStorage = journalStorageRepo.findByStorageStorageType(StorageType.USB); 
+        List<JournalStorageDto> journalsStorageDto = journalStorageService.listDto(journalsStorage);
+        model.addAttribute("journalStorageDto", journalsStorageDto); 
         }
-        Iterable<String> emp = zirService.findAllEmployees();
+        List<DictionaryEmployee> emp = employeeClient.getList();
         
         model.addAttribute("employee", emp);
         return storageName;
@@ -88,21 +95,27 @@ public class MainController {
       // Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
       //  UserInfo userDetails = (UserInfo) authentication.getPrincipal();
       // строки выше для того, чтобы вытаскивать пользователя
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserInfo userDetails = (UserInfo) authentication.getPrincipal();
         
+        dto.setEmployeeSecurity(userDetails.getUsername());
         JournalStorage journalStorage = storageMapper.JournalStorageDtoToJournalStorage(dto);
         
+        List<DictionaryEmployee> emp = employeeClient.getList();
         journalStorageRepo.save(journalStorage);
         sendMailService.sendMail(journalStorage);
-
         
         
-        Iterable<JournalStorage> journalsStorage = journalStorageRepo.findByStorageStorageType(StorageType.HDD); 
-        Iterable<String> emp = zirService.findAllEmployees();
+        
+        
+       List<JournalStorage> journalsStorage = journalStorageRepo.findByStorageStorageType(StorageType.HDD); 
+        List<JournalStorageDto> journalsStorageDto = journalStorageService.listDto(journalsStorage);
+        model.put("journalStorageDto", journalsStorageDto); 
         model.put("employee", emp);
-        model.put("journalStorage", journalsStorage);  
         model.put("name", "НЖМД");        
         model.put("path", "ngmd");  
         model.put("storageType", "HDD");  
+        model.put("title", "Журнал учёта НЖМД");
         return "/ngmd";
     }
     
@@ -119,8 +132,8 @@ public class MainController {
         
         
         Iterable<JournalStorage> journalsStorage = journalStorageRepo.findByStorageStorageType(StorageType.USB);
-        Iterable<String> emp = zirService.findAllEmployees();
-        model.put("employee", emp);
+      //  Iterable<String> emp = zirService.findAllEmployees();
+    //    model.put("employee", emp);
         model.put("journalStorage", journalsStorage);
         model.put("name", "USB, CD, DVD");
         model.put("path", "usb");
@@ -152,8 +165,8 @@ public class MainController {
         
 
         Iterable<JournalStorage> journalsStorage = journalStorageRepo.findByStorageStorageType(StorageType.CARD);
-        Iterable<String> emp = zirService.findAllEmployees();
-        model.put("employee", emp);
+    //    Iterable<String> emp = zirService.findAllEmployees();
+    //    model.put("employee", emp);
         model.put("journalStorage", journalsStorage);
         model.put("name", "ключевой носитель");        
         model.put("path", "card");     
@@ -166,12 +179,10 @@ public class MainController {
         
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserInfo userDetails = (UserInfo) authentication.getPrincipal();
-        String notParseId = userDetails.getUserCode();
-        int id = Integer.parseInt(notParseId);
-        String emailUser = zirService.getEmailUserById(id);
-        User user = userRepo.findByEmail(emailUser);
-        Iterable <JournalStorage> journalsStorage = requestService.getAllDevices(user);
-        model.addAttribute("journalStorage", journalsStorage);
+        List<JournalStorage> journalsStorage = journalStorageRepo.findByEmployee(userDetails.getUsername());
+        List<JournalStorageDto> journalsStorageDto = journalStorageService.listDto(journalsStorage);
+        model.addAttribute("title", "Личный кабинет");
+        model.addAttribute("journalStorageDto", journalsStorageDto);
         return "account";
     }
     
@@ -182,12 +193,10 @@ public class MainController {
         
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserInfo userDetails = (UserInfo) authentication.getPrincipal();
-        String notParseId = userDetails.getUserCode();
-        int id = Integer.parseInt(notParseId);
-        String emailUser = zirService.getEmailUserById(id);
-        User user = userRepo.findByEmail(emailUser);
-        Iterable <JournalStorage> journalsStorage = requestService.getAllDevices(user);
-        model.addAttribute("journalStorage", journalsStorage);
+        List<JournalStorage> journalsStorage = journalStorageRepo.findByEmployee(userDetails.getUsername());
+        List<JournalStorageDto> journalsStorageDto = journalStorageService.listDto(journalsStorage);
+        model.addAttribute("title", "Личный кабинет");
+        model.addAttribute("journalStorageDto", journalsStorageDto);
         
         return "account";
     }
@@ -205,6 +214,13 @@ public class MainController {
         model.addAttribute("dto", signDto);
         signStorageService.signSecurityWorker(signDto);
         return "redirect:/ngmd";
+     }
+     
+     @PostMapping("/comment")
+     public String comment(CommentDto dto, Model model) {
+         model.addAttribute("dto", dto);
+         editCommentService.editComment(dto);
+     return "redirect:/ngmd";
      }
     
 }

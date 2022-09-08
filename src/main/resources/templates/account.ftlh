@@ -4,7 +4,7 @@
 <@c.page>
 
 
-<@l.list journalStorage journalStorage />
+<@l.list journalStorageDto journalStorageDto />
 
 
 

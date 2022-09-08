@@ -14,6 +14,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author 041AlikinOS
  */
 public interface JournalStorageRepo extends JpaRepository<JournalStorage, Long> {
-    List<JournalStorage> findByEmployeeId(Long id);
+    List<JournalStorage> findByEmployee(String employee);
+    List<JournalStorage> findBySecurityEmployee(String securityEmployee);
     List<JournalStorage> findByStorageStorageType(StorageType type);
 }

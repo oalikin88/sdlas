@@ -30,23 +30,23 @@
 <#assign index = index+1>
     <tr class="text-end">
       <th>${index}</th>
-      <td>${item.storage.number}</td>
-      <td>${item.storage.dateRegistration?date?string["dd.MM.yyyy"]}</td>
-      <td>${item.storage.type}</td>
-      <td>${item.storage.tag}</td>
-      <td>${item.storage.manufactureNumber}</td>
-      <td>${item.storage.capacity}</td>
-      <td>${item.storage.fromPlace}</td>
-      <td>${item.storage.pcNumber}</td>     
-      <td>${item.employee.lastName} ${item.employee.firstName[0]}. ${item.employee.fathersName[0]}.,
+      <td>${item.number}</td>
+      <td>${item.dateRegistration}</td>
+      <td>${item.type}</td>
+      <td>${item.tag}</td>
+      <td>${item.manufactureNumber}</td>
+      <td>${item.capacity}</td>
+      <td>${item.fromPlace}</td>
+      <td>${item.pcNumber}</td>     
+      <td>${item.employee}
         <#if item.signEmployee?c == "false"> <p style="color:red;">ожидается подпись</p>
         <#else>
             <p style="color:green;">подписано</p>
-            ${item.dateSignEmployee?string["dd.MM.yyyy в HH:mm"]}
+            ${item.dateSignEmployee!""}
         </#if>
       </td>  
       <td>
-<#if item.signToBack?c == "false">
+<#if item.signToBack?c == "false" && item.signEmployee?c == "true">
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signSecurityWorker${index}">
  Подписать
 </button>
@@ -62,9 +62,9 @@
       </div>
       <div class="modal-body">
       <form method="post" action="/sign">
-       <p>${item.storage.number}</p>
+       <p>${item.number}</p>
          <input type="hidden" name="sign" value="true">
-         <input type="hidden" name="Id" value="${item.id}">
+         <input type="hidden" name="id" value="${item.id}">
             <div class="row mb-3">
                         <label for="registrationEndSign" class="col col-form-label">Отметка о снятии с учета, номер документа:</label>
                         <div class="col">
@@ -77,17 +77,22 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
         <button type="submit" class="btn btn-primary">Да</button>
   </form> 
+<#elseif item.signEmployee?c == "false">
+
+
 <#else>
-            ${item.securityEmployee.lastName} ${item.securityEmployee.firstName[0]}. ${item.securityEmployee.fathersName[0]}.,
+            ${item.employeeSecurity}
             <p style="color:green;">подписано</p>
-            ${item.getBackToSecurityUser?string["dd.MM.yyyy в HH:mm"]}
+            ${item.getBackToSecurityUser!""}
             
 </#if>
 </td>
-      <td>${item.registrationEndSign!}</td>
-      <td>${item.comment}
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editComment${index}">
- Редактировать
+      <td>${item.registrationEndSign!""}</td>
+      <td>${item.comment!""}
+<button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#editComment${index}">
+ <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+  <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
+</svg>
 </button>
 
 
@@ -96,21 +101,21 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Редактировать примечание:</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <form method="post" action="/sign">
-       <p>${item.storage.number}</p>
-         <input type="hidden" name="sign" value="true">
-         <input type="hidden" name="Id" value="${item.id}">
-            <div class="row mb-3">
-                        <label for="registrationEndSign" class="col col-form-label">Отметка о снятии с учета, номер документа:</label>
-                        <div class="col">
-                        <input type="text" class="form-control" name="registrationEndSign" placeholder="Укажите номер документа" />
-                        </div>
-                        </div>
-      Подписать?
+      <form method="post" action="/comment">
+                        <input type="hidden" name="id" value="${item.id}">
+                        <textarea class="form-control" name="comment" placeholder="Примечание">
+<#if item.comment != "null">
+${item.comment}
+<#else>
+
+   </#if>  
+</textarea>
+                   
+                        
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
