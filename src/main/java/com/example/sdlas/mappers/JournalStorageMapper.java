@@ -9,6 +9,7 @@ import com.example.sdlas.entities.Storage;
 import com.example.sdlas.model.JournalStorageDto;
 import com.example.sdlas.model.StorageType;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.opfr.springBootStarterDictionary.clientImpl.EmployeeClient;
 import org.opfr.springBootStarterDictionary.models.DictionaryEmployee;
@@ -75,7 +76,8 @@ public class JournalStorageMapper {
         }
         
         if(dto.capacity != null) {
-            storage.setCapacity(dto.capacity);
+           String s = dto.capacity.replace(',', ' ');
+            storage.setCapacity(s);
         } else {
             storage.setCapacity("");
         }
@@ -126,17 +128,22 @@ public class JournalStorageMapper {
         JournalStorageDto dto = new JournalStorageDto();
         DictionaryEmployee employeeByCode = employeeClient.getEmployeeByCode(journalStorage.getEmployee());
         DictionaryEmployee employeeSecurityByCode = employeeClient.getEmployeeByCode(journalStorage.getSecurityEmployee());
-        
+        SimpleDateFormat date = new SimpleDateFormat("dd.MM.yyyy");
         dto.number = journalStorage.getStorage().getNumber();
         dto.capacity = journalStorage.getStorage().getCapacity();
-        dto.dateRegistration = journalStorage.getStorage().getDateRegistration().toString();
+        if(journalStorage.getStorage().getDateRegistration() != null) {
+            Date dateRegistration = journalStorage.getStorage().getDateRegistration();
+            dto.dateRegistration = date.format(dateRegistration);
+        } else {
+            dto.dateRegistration = "";
+        }
         dto.id = journalStorage.getId();
         dto.employee = employeeByCode.getSurname() + " " + employeeByCode.getName().substring(0, 1) + ". " + employeeByCode.getMiddlename().substring(0, 1) + ".";
         dto.employeeSecurity = employeeSecurityByCode.getSurname() + " " + employeeSecurityByCode.getName().substring(0, 1) + ". " + employeeSecurityByCode.getMiddlename().substring(0, 1) + ".";
         dto.fromPlace = journalStorage.getStorage().getFromPlace();
         dto.manufactureNumber = journalStorage.getStorage().getManufactureNumber();
         dto.pcNumber = journalStorage.getPcNumber();
-        dto.storageType = journalStorage.getStorage().getType();
+        dto.storageType = journalStorage.getStorage().getStorageType().toString();
         dto.tag = journalStorage.getStorage().getTag();
         dto.type = journalStorage.getStorage().getType();
         dto.signEmployee = journalStorage.isSignEmployee();
@@ -144,13 +151,17 @@ public class JournalStorageMapper {
         dto.comment = journalStorage.getComment();
         dto.RegistrationEndSign = journalStorage.getRegistrationEndSign();
         if(journalStorage.getGetBackToSecurityUser() != null) {
-            dto.getBackToSecurityUser = journalStorage.getGetBackToSecurityUser().toString();
+            
+           Date dateGetBack = journalStorage.getGetBackToSecurityUser();
+           
+           dto.getBackToSecurityUser = date.format(dateGetBack);
         } else {
             dto.getBackToSecurityUser = "";
         }
         
         if(journalStorage.getDateSignEmployee() != null) {
-            dto.dateSignEmployee = journalStorage.getDateSignEmployee().toString();
+            Date signEmployeeDate = journalStorage.getDateSignEmployee();
+            dto.dateSignEmployee = date.format(signEmployeeDate);
         } else {
             dto.dateSignEmployee = "";
         }

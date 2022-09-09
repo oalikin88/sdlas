@@ -18,11 +18,13 @@ import com.example.sdlas.services.SignStorageService;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.opfr.springBootStarterDictionary.clientImpl.EmployeeClient;
 import org.opfr.springBootStarterDictionary.models.DictionaryEmployee;
 import org.opfr.springbootstarterauthsso.security.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -122,8 +124,9 @@ public class MainController {
     @PostMapping(path = "/usb", consumes = { MediaType.ALL_VALUE})
     public String addUsb(JournalStorageDto dto, Map<String, Object> model) throws ParseException {
         
-      // Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-      //  UserInfo userDetails = (UserInfo) authentication.getPrincipal();
+    //  Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//       UserInfo userDetails = (UserInfo) authentication.getPrincipal();
+//       userDetails.getOrgCode()
       // строки выше для того, чтобы вытаскивать пользователя
         
         JournalStorage journalStorage = storageMapper.JournalStorageDtoToJournalStorage(dto);
@@ -140,9 +143,10 @@ public class MainController {
         model.put("storageType", "USB");  
         return "/usb";
     }
-    
+   // @PreAuthorize("principal.orgCode == '041-000-5570'")
     @GetMapping("/main")
     public String main() {
+        
         return "main";
     }
     
@@ -222,6 +226,24 @@ public class MainController {
          editCommentService.editComment(dto);
      return "redirect:/ngmd";
      }
+     
+     @PostMapping("/edit")
+     public String select(Model model) {
+        List<JournalStorage> journalsStorage = journalStorageRepo.findByStorageStorageType(StorageType.HDD);
+        List<JournalStorage> list = journalsStorage.stream().filter(e -> e.isSignEmployee() == false).collect(Collectors.toList());
+        List<JournalStorageDto> journalsStorageDto = journalStorageService.listDto(list);
+        model.addAttribute("journalStorageDto", journalsStorageDto); 
+         return "redirect:/ngmd";
+     }
     
+     @PostMapping("/edit/{id}")
+     public String editJournal(@PathVariable Long id, JournalStorageDto dto, Model model) throws ParseException {
+         JournalStorage jornaJournalStorage = journalStorageRepo.getById(id);
+         JournalStorageDto journalStorageDto = storageMapper.JournalStorageToJournalStorageDto(jornaJournalStorage);
+         model.addAttribute("dto", journalStorageDto);
+         JournalStorage journalStorageEdited = storageMapper.JournalStorageDtoToJournalStorage(dto);
+         journalStorageRepo.save(journalStorageEdited);
+         return "redirect:/ngmd";
+     }
 }
 
