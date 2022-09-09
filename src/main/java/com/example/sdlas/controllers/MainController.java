@@ -11,7 +11,7 @@ import com.example.sdlas.model.SignDto;
 import com.example.sdlas.model.JournalStorageDto;
 import com.example.sdlas.model.StorageType;
 import com.example.sdlas.repositories.JournalStorageRepo;
-import com.example.sdlas.services.EditCommentService;
+import com.example.sdlas.services.EditCommentService1;
 import com.example.sdlas.services.JournalStorageService;
 import com.example.sdlas.services.SendMailService;
 import com.example.sdlas.services.SignStorageService;
@@ -51,7 +51,7 @@ public class MainController {
     @Autowired
     private SignStorageService signStorageService;
     @Autowired
-    private EditCommentService editCommentService;
+    private EditCommentService1 editCommentService;
     @Autowired
     private JournalStorageService journalStorageService;
    

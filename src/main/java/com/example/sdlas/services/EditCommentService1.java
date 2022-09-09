@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * @author 041AlikinOS
  */
 @Component
-public class EditCommentService {
+public class EditCommentService1 {
     
     @Autowired
     private JournalStorageRepo journalStorageRepo;
