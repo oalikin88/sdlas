@@ -19,7 +19,7 @@
                     <div class="row mb-3">
                         <label for="dateRegistration" class="col-sm-2 col-form-label">Дата постановки на учёт:</label>
                         <div class="col-sm-2">
-                        <input type="date" class="col-sm-2 form-control" name="dateRegistration" /> 
+                        <input type="date" id="date" class="col-sm-2 form-control" name="dateRegistration" value="${journalStorageDto.dateRegistration}" /> 
                         </div>
                         </div>
                     <div class="row mb-3">
@@ -68,8 +68,8 @@
 
                         </div>
                          <div class="col-sm-5">
-                        <select class="form-select" name="capacity" aria-label="Укажите откуда поступил">
-                          <option selected></option>  
+                        <select class="form-select" name="measure" aria-label="единица измерения">
+                          <option selected>${journalStorageDto.measure}</option>  
                           <option value="Тб">Тб</option>   
                           <option value="Гб">Гб</option>   
                           <option value="Мб">Мб</option>
@@ -141,7 +141,7 @@
                         </div>
 <div class="row text-start">
 <div class="col">
-<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Отмена</button>
+<button type="button" onclick="history.back();" class="btn btn-primary" data-bs-dismiss="modal">Отмена</button>
 </div>
 <div class="col text-center">
         <a href="/delete/${journalStorageDto.id}" class="btn btn-danger" role="button">Удалить</a>

@@ -87,9 +87,9 @@
 
                         </div>
                          <div class="col-sm-5">
-                        <select class="form-select" name="capacity" aria-label="Укажите откуда поступил">
+                        <select class="form-select" name="measure" aria-label="единица измерения" placeholder="Единица измерения">
 
-                          <option selected></option>  
+                          <option selected>Единица измерения</option>  
                           <option value="Тб">Тб</option>   
                           <option value="Гб">Гб</option>   
                           <option value="Мб">Мб</option>
@@ -97,7 +97,6 @@
                         </select>
                         
                         </div>
-                        <input type="hidden" id="capacity" name="capacity"  >
 
                         </div>
                     <div class="row mb-3">

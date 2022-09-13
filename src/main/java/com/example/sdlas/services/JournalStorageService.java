@@ -7,10 +7,13 @@ package com.example.sdlas.services;
 import com.example.sdlas.entities.JournalStorage;
 import com.example.sdlas.mappers.JournalStorageMapper;
 import com.example.sdlas.model.JournalStorageDto;
+import com.example.sdlas.model.Measure;
 import com.example.sdlas.model.StorageType;
 import com.example.sdlas.repositories.JournalStorageRepo;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -50,7 +53,7 @@ public class JournalStorageService {
        public void editJournalStorage(JournalStorageDto dto) throws ParseException {
         JournalStorage journalStorage = journalStorageRepo.findById(dto.id).get();
         journalStorage.getStorage().setNumber(dto.number);
-        journalStorage.getStorage().setDateRegistration(dto.getConvertedDate());
+        journalStorage.getStorage().setDateRegistration(JournalStorageService.getDate(dto.dateRegistration));
         journalStorage.getStorage().setType(dto.type);
         if(dto.storageType.equals("HDD")) {
             journalStorage.getStorage().setStorageType(StorageType.HDD);
@@ -62,6 +65,20 @@ public class JournalStorageService {
         journalStorage.getStorage().setTag(dto.tag);
         journalStorage.getStorage().setFromPlace(dto.fromPlace);
         journalStorage.getStorage().setManufactureNumber(dto.manufactureNumber);
+        if(dto.measure != null) {
+            if(dto.measure.equals("Тб")) {
+                journalStorage.getStorage().setMeasure(Measure.TERABYTE);
+            } else if(dto.measure.equals("Гб")) {
+                journalStorage.getStorage().setMeasure(Measure.GIGABYTE);
+            } else if(dto.measure.equals("Мб")) {
+                journalStorage.getStorage().setMeasure(Measure.MEGABYTE);
+            } else {
+                journalStorage.getStorage().setMeasure(Measure.KILOBYTE);
+            }
+            
+        } else {
+            journalStorage.getStorage().setMeasure(Measure.MEGABYTE);
+        }
         journalStorage.getStorage().setCapacity(dto.capacity);
         journalStorage.setPcNumber(dto.pcNumber);
         journalStorage.setComment(dto.comment);
@@ -71,6 +88,13 @@ public class JournalStorageService {
         journalStorageRepo.save(journalStorage);
         
         
+       }
+       
+       
+       public static Date getDate(String date) throws ParseException {
+           SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+           Date curentDate = dateFormat.parse(date);
+           return curentDate;
        }
 
 }

@@ -30,11 +30,11 @@
       <td>${item.type}</td>
       <td>${item.tag}</td>
       <td>${item.manufactureNumber}</td>
-      <td>${item.capacity}</td>
+      <td>${item.capacity} ${item.measure}</td>
       <td>${item.pcNumber}</td>     
       <td>${item.employee} 
 <#if item.signEmployee?c == "false">
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sign${index}">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sign${index}" style="margin-left:15px;">
  Подписать
 </button>
 <!-- Modal -->

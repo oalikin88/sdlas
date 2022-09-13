@@ -234,7 +234,7 @@ public class MainController {
     @GetMapping("/edit")
     public String selectJournal(Long id, JournalStorageDto dto, Model model) {
         JournalStorage journalStorage = journalStorageRepo.findById(id).get();
-        JournalStorageDto journalStorageDto = storageMapper.JournalStorageToJournalStorageDto(journalStorage);
+        JournalStorageDto journalStorageDto = storageMapper.JournalStorageToJournalStorageDtoForEdit(journalStorage);
         List<DictionaryEmployee> emp = employeeClient.getList();
         String employeeByCode = employeeService.getEmployee(id);
         model.addAttribute("employeeByCode", employeeClient.getEmployeeByCode(employeeByCode));

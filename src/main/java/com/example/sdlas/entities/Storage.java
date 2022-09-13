@@ -4,6 +4,7 @@
  */
 package com.example.sdlas.entities;
 
+import com.example.sdlas.model.Measure;
 import com.example.sdlas.model.StorageType;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -36,19 +37,26 @@ public class Storage {
     private String tag;
     private String manufactureNumber;
     private String capacity;
+    @Enumerated(EnumType.STRING)
+    private Measure measure;
     private String fromPlace;
     private StorageType storageType;
 
-    public Storage(String number, Date dateRegistration, String type, String tag, String manufactureNumber, String capacity, String fromPlace, StorageType storageType) {
+    public Storage(String number, Date dateRegistration, String type, String tag, String manufactureNumber, String capacity, Measure measure, String fromPlace, StorageType storageType) {
         this.number = number;
         this.dateRegistration = dateRegistration;
         this.type = type;
         this.tag = tag;
         this.manufactureNumber = manufactureNumber;
         this.capacity = capacity;
+        this.measure = measure;
         this.fromPlace = fromPlace;
         this.storageType = storageType;
     }
+
+   
+
+    
 
 
  

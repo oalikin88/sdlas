@@ -7,6 +7,7 @@ package com.example.sdlas.mappers;
 import com.example.sdlas.entities.JournalStorage;
 import com.example.sdlas.entities.Storage;
 import com.example.sdlas.model.JournalStorageDto;
+import com.example.sdlas.model.Measure;
 import com.example.sdlas.model.StorageType;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -76,10 +77,24 @@ public class JournalStorageMapper {
         }
         
         if(dto.capacity != null) {
-           String s = dto.capacity.replace(',', ' ');
-            storage.setCapacity(s);
+            storage.setCapacity(dto.capacity);
+            
         } else {
             storage.setCapacity("");
+        }
+        if(dto.measure != null) {
+            if(dto.measure.equals("Тб")) {
+                storage.setMeasure(Measure.TERABYTE);
+            } else if(dto.measure.equals("Гб")) {
+                storage.setMeasure(Measure.GIGABYTE);
+            } else if(dto.measure.equals("Мб")) {
+                storage.setMeasure(Measure.MEGABYTE);
+            } else {
+                storage.setMeasure(Measure.KILOBYTE);
+            }
+            
+        } else {
+            storage.setMeasure(Measure.MEGABYTE);
         }
         
         if(dto.fromPlace != null) {
@@ -130,7 +145,60 @@ public class JournalStorageMapper {
         DictionaryEmployee employeeSecurityByCode = employeeClient.getEmployeeByCode(journalStorage.getSecurityEmployee());
         SimpleDateFormat date = new SimpleDateFormat("dd.MM.yyyy");
         dto.number = journalStorage.getStorage().getNumber();
+        
         dto.capacity = journalStorage.getStorage().getCapacity();
+        dto.measure = journalStorage.getStorage().getMeasure().getTitle();
+        if(journalStorage.getStorage().getDateRegistration() != null) {
+            Date dateRegistration = journalStorage.getStorage().getDateRegistration();
+            dto.dateRegistration = date.format(dateRegistration);
+        } else {
+            dto.dateRegistration = "";
+        }
+        dto.id = journalStorage.getId();
+        dto.employee = employeeByCode.getSurname() + " " + employeeByCode.getName().substring(0, 1) + ". " + employeeByCode.getMiddlename().substring(0, 1) + ".";
+        dto.employeeSecurity = employeeSecurityByCode.getSurname() + " " + employeeSecurityByCode.getName().substring(0, 1) + ". " + employeeSecurityByCode.getMiddlename().substring(0, 1) + ".";
+        dto.fromPlace = journalStorage.getStorage().getFromPlace();
+        dto.manufactureNumber = journalStorage.getStorage().getManufactureNumber();
+        dto.pcNumber = journalStorage.getPcNumber();
+        dto.storageType = journalStorage.getStorage().getStorageType().toString();
+        dto.tag = journalStorage.getStorage().getTag();
+        dto.type = journalStorage.getStorage().getType();
+        dto.signEmployee = journalStorage.isSignEmployee();
+        dto.signToBack = journalStorage.isSignToBack();
+        dto.comment = journalStorage.getComment();
+        dto.RegistrationEndSign = journalStorage.getRegistrationEndSign();
+        if(journalStorage.getGetBackToSecurityUser() != null) {
+            
+           Date dateGetBack = journalStorage.getGetBackToSecurityUser();
+           
+           dto.getBackToSecurityUser = date.format(dateGetBack);
+        } else {
+            dto.getBackToSecurityUser = "";
+        }
+        
+        if(journalStorage.getDateSignEmployee() != null) {
+            Date signEmployeeDate = journalStorage.getDateSignEmployee();
+            dto.dateSignEmployee = date.format(signEmployeeDate);
+        } else {
+            dto.dateSignEmployee = "";
+        }
+        
+        dto.storageType = journalStorage.getStorage().getStorageType().toString();
+      
+        
+        
+        return dto;
+    }
+    
+    public JournalStorageDto JournalStorageToJournalStorageDtoForEdit(JournalStorage journalStorage) {
+        JournalStorageDto dto = new JournalStorageDto();
+        DictionaryEmployee employeeByCode = employeeClient.getEmployeeByCode(journalStorage.getEmployee());
+        DictionaryEmployee employeeSecurityByCode = employeeClient.getEmployeeByCode(journalStorage.getSecurityEmployee());
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+        dto.number = journalStorage.getStorage().getNumber();
+        
+        dto.capacity = journalStorage.getStorage().getCapacity();
+        dto.measure = journalStorage.getStorage().getMeasure().getTitle();
         if(journalStorage.getStorage().getDateRegistration() != null) {
             Date dateRegistration = journalStorage.getStorage().getDateRegistration();
             dto.dateRegistration = date.format(dateRegistration);
