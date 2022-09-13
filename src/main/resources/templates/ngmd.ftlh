@@ -3,10 +3,13 @@
 <#import "parts/buttons.ftlh" as buttons>
 
 
+
 <@c.page>
 
-<@buttons.buttons name path />
 
+
+
+<@buttons.buttons name path />
 
 <@list.list journalStorageDto journalStorageDto />
 
