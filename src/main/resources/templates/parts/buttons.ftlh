@@ -1,5 +1,11 @@
 <#macro buttons name path>
 
+<script>
+ jQuery(function($){
+                            $("#number").mask("999.99-999999",{placeholder:""});
+                            
+                         });
+</script>
 <div class="mt-3">
   <div class="row">
     <div class="col">
@@ -26,26 +32,32 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form method="post" action="${path}">
+        <form method="post" class="needs-validation" action="${path}" novalidate>
                     <div class="row mb-3">
-                        <label for="number" class="col-sm-2 col-form-label">Учётный номер:</label>
-                        <div class="col-sm-10">
+                        <label for="number" class="col-sm-4 col-form-label">Учётный номер:</label>
+                        <div class="col-sm-8">
                         <input type="hidden" name="name" value="${path}" >
                         <input type="hidden" name="storageType" value="${storageType}">
-                        <input type="text" class="form-control" name="number" placeholder="Введите учётный номер" />      
+                        <input type="text" id="number" class="col-sm-8 form-control" name="number" placeholder="Введите учётный номер" required />      
+                         <div class="invalid-feedback">
+                          Вы не ввели учётный номер
+                        </div>
                         </div>
                         </div>
                     <div class="row mb-3">
-                        <label for="dateRegistration" class="col-sm-2 col-form-label">Дата постановки на учёт:</label>
+                        <label for="dateRegistration" class="col-sm-4 col-form-label">Дата постановки на учёт:</label>
                         <div class="col-sm-2">
-                        <input type="date" class="col-sm-2 form-control" name="dateRegistration" /> 
+                        <input type="date" class="col-sm-8 form-control" name="dateRegistration" required /> 
+                          <div class="invalid-feedback">
+                          Вы не указади дату постановки на учёт
+                        </div>
                         </div>
                         </div>
                     <div class="row mb-3">
-                        <label for="type" class="col-sm-2 col-form-label">Тип носителя:</label>
-                        <div class="col-sm-10">
-                        <select class="form-select" name="type" aria-label="Укажите тип носителя">
-                          <option selected>Выбрать тип</option>
+                        <label for="type" class="col-sm-4 col-form-label">Тип носителя:</label>
+                        <div class="col-sm-8">
+                        <select class="form-select col-sm-8" name="type" aria-label="Укажите тип носителя"   required>
+                          <option selected disabled value="">Выбрать тип</option>
                           <#if storageType == "CARD">
                           <option value="СНИ">СНИ</option>
                           <#elseif storageType == "HDD">
@@ -60,101 +72,121 @@
                            <option value="USB">USB</option>
                            </#if>
                         </select>
+                       <div class="invalid-feedback">
+                          Вы не указали тип носителя
                         </div>
+
                         </div>
+                       
+                        </div>
+                        
                     <div class="row mb-3">
-                        <label for="tag" class="col-sm-2 col-form-label">Метка категории носителя:</label>
-                        <div class="col-sm-10">
-                        <select class="form-select" name="tag" aria-label="Укажите метку категории носителя">
-                          <option selected>Выбрать метку категории носителя</option>  
+                        <label for="tag" class="col-sm-4 col-form-label">Метка категории носителя:</label>
+                        <div class="col-sm-8">
+                        <select class="form-select col-sm-8" name="tag" aria-label="Укажите метку категории носителя" required>
+                          <option selected disabled value="">Выбрать метку категории носителя</option>  
                           <option value="Конфиденциально">Конфиденциально</option>   
                           <option value="Ключ">Ключ</option>
                         </select>
+                         <div class="invalid-feedback">
+                          Вы не указали метку категории носителя
+                        </div>
+
                         </div>
                         </div>
                     <div class="row mb-3">
-                        <label for="manufactureNumber" class="col-sm-2 col-form-label">Заводской или входящий номер:</label>
-                        <div class="col-sm-10">
-                        <input type="text" class="form-control" name="manufactureNumber" placeholder="Укажите заводской или входящий номер" />
+                        <label for="manufactureNumber" class="col-sm-4 col-form-label">Заводской или входящий номер:</label>
+                        <div class="col-sm-8">
+                        <input type="text" class="form-control col-sm-8" name="manufactureNumber" placeholder="Укажите заводской или входящий номер" required />
+                        <div class="invalid-feedback">
+                          Вы не указали заводской или входящий номер
+                        </div>
                         </div>
                         </div>
                     <div class="row mb-3">
                   
                         
-                        <label for="capacity" class="col-sm-2 col-form-label">Ёмкость носителя(длина ленты):</label>
-                        <div class="col-sm-5">
-                        <input type="text" class="form-control" name="capacity" placeholder="Укажите ёмкость носителя(длину ленты)" />
-
+                        <label for="capacity" class="col-sm-4 col-form-label">Ёмкость носителя(длина ленты):</label>
+                        <div class="col-sm-4">
+                        <input type="text" class="form-control" name="capacity" placeholder="Укажите ёмкость носителя(длину ленты)" required/>
+                        <div class="invalid-feedback">
+                          Вы не задали ёмкость носителя
                         </div>
-                         <div class="col-sm-5">
-                        <select class="form-select" name="measure" aria-label="единица измерения" placeholder="Единица измерения">
+                        </div>
+                         <div class="col-sm-4">
+                        <select class="form-select" name="measure" aria-label="единица измерения" placeholder="Единица измерения" required>
 
-                          <option selected>Единица измерения</option>  
+                          <option selected disabled value="">Единица измерения</option>  
                           <option value="Тб">Тб</option>   
                           <option value="Гб">Гб</option>   
                           <option value="Мб">Мб</option>
                           <option value="Кб">Кб</option>
                         </select>
-                        
+                         <div class="invalid-feedback">
+                          Вы не указали единицу измерения
+                        </div>
                         </div>
 
                         </div>
                     <div class="row mb-3">
-                        <label for="fromPlace" class="col-sm-2 col-form-label">Откуда поступил:</label>
-                        <div class="col-sm-10">
-                        <select class="form-select" name="fromPlace" aria-label="Укажите откуда поступил">
-                          <option selected>Выберите место откуда поступил носитель</option>  
+                        <label for="fromPlace" class="col-sm-4 col-form-label">Откуда поступил:</label>
+                        <div class="col-sm-8">
+                        <select class="form-select" name="fromPlace" aria-label="Укажите откуда поступил" required >
+                          <option selected disabled value="">Выберите место откуда поступил носитель</option>  
                           <option value="Склад">Склад</option>   
                           <option value="Сбербанк">Сбербанк</option>
                         </select>
+                         <div class="invalid-feedback">
+                          Вы не указали откуда поступил носитель
+                        </div>
                         </div>
                         </div>
                     <div class="row mb-3">
-                        <label for="pcNumber" class="col-sm-2 col-form-label">Инвентарный № ПК, в который установлен НЖМД:</label>
-                        <div class="col-sm-10">
-                        <input type="text" class="form-control" name="pcNumber" placeholder="Укажите инвентарный №" />
+                        <label for="pcNumber" class="col-sm-4 col-form-label">Инвентарный № ПК, в который установлен НЖМД:</label>
+                        <div class="col-sm-8">
+                        <input type="text" class="form-control" name="pcNumber" placeholder="Укажите инвентарный №" required />
+                        <div class="invalid-feedback">
+                          Вы не указали инвентарный номер
+                        </div>
                         </div>
                         </div>
                     
                         <div class="row mb-3">
 
-                       <script>
-                          $(document).ready(function() {
-                            $("#employee-select").selectize({
-                            create: true,
-                            sortField: 'text',
-                            });
-                        });
-                        </script>
+                      
                     
    
-                        <label for="employee-select" class="col-sm-2 col-form-label">Выбрать работника:</label>
+                        <label for="employee-select" class="col-sm-4 col-form-label">Выбрать работника:</label>
                    
                      <#list employee>
-                         <div class="col-sm-10">
-                        <select id="employee-select" name="employee" class="selectized" placeholder="Выберите работника">
-
-                        <#items as employee>
-                          <option selected></option>
+                         <div class="col-sm-8" >
+                        <select id="employee-select" name="employee" class="selectized" placeholder="Выберите работника" required>
+                          <option selected disabled value="">Выбрать работника</option>
+                            <#items as employee>
                           <option value="${employee.code}">${employee.surname} ${employee.name} ${employee.middlename}</option>
                           </#items>
 
                         </select>
-
+                          <div class="invalid-feedback">
+                          Вы не выбрали работника
+                        </div>
+                     
                                 <#else>
 
                                 <p>список пуст</p>
 
                                 </#list>
 
+                      
+
                         </div>
 
                         </div>
-                      
+                    
                         
                     <div class="row mb-3">
-                        <label for="comment" class="col-sm-2 col-form-label">Примечание:</label>
-                        <div class="col-sm-10">
+                        <label for="comment" class="col-sm-4 col-form-label">Примечание:</label>
+                        <div class="col-sm-8">
                         <textarea class="form-control" name="comment" placeholder="Примечание"></textarea>
                         
                         </div>
@@ -209,6 +241,38 @@
 </div>
 </div>
 
+                        <script>
 
+                        
+
+                          $(document).ready(function() {  
+                            
+                           //var select = document.querySelector("#employee-select");
+                           //var attrs = select.attributes;
+                           //var reqAttr = document.createAttribute('required');
+
+                           //attrs.setNamedItem(reqAttr);
+
+
+                            $("#employee-select").selectize({    
+                            sortField: 'text',
+                            highlight: true
+                            });
+                            
+                        });
+                        $(".needs-validation").validate({ 
+                             ignore: ':hidden:not([class~=selectized]),:hidden > .selectized, .selectize-control .selectize-input input',
+                             rules: {
+                                 employee-select: {
+                                     required: true
+                                     
+                                  }
+                               }
+
+                          }); 
+
+                  
+                          
+</script>
 
 </#macro>

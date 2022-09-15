@@ -38,7 +38,7 @@ public class JournalStorageService {
 
         List<JournalStorageDto> list = new ArrayList<>();
         for (JournalStorage journal : listJournalStorage) {
-            JournalStorageDto dto = journalStorageMapper.JournalStorageToJournalStorageDto(journal);
+            JournalStorageDto dto = journalStorageMapper.JournalStorageToJournalStorageDto(journal, "dd.MM.yyyy");
             list.add(dto);
         }
         return list;

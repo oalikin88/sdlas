@@ -7,9 +7,9 @@
 ${title!"Главное меню"}
 </title>
 <script src="js/jquery-3.6.0.min.js"></script>
+
+<script src="js/jquery.validate.js"></script>
 <script src="js/selectize.min.js"></script>
-
-
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/selectize.bootstrap5.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
@@ -22,6 +22,8 @@ ${title!"Главное меню"}
 
 <script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/validate-forms.js"></script>
+<script src="js/jquery.maskedinput.js"></script>
 
 </body>
 </html>

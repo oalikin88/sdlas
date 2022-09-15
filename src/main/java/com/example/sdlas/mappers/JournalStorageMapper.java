@@ -139,11 +139,11 @@ public class JournalStorageMapper {
     return journalStorage;
     }
     
-    public JournalStorageDto JournalStorageToJournalStorageDto(JournalStorage journalStorage) {
+    public JournalStorageDto JournalStorageToJournalStorageDto(JournalStorage journalStorage, String datePattern) {
         JournalStorageDto dto = new JournalStorageDto();
         DictionaryEmployee employeeByCode = employeeClient.getEmployeeByCode(journalStorage.getEmployee());
         DictionaryEmployee employeeSecurityByCode = employeeClient.getEmployeeByCode(journalStorage.getSecurityEmployee());
-        SimpleDateFormat date = new SimpleDateFormat("dd.MM.yyyy");
+        SimpleDateFormat date = new SimpleDateFormat(datePattern);
         dto.number = journalStorage.getStorage().getNumber();
         
         dto.capacity = journalStorage.getStorage().getCapacity();
@@ -190,55 +190,6 @@ public class JournalStorageMapper {
         return dto;
     }
     
-    public JournalStorageDto JournalStorageToJournalStorageDtoForEdit(JournalStorage journalStorage) {
-        JournalStorageDto dto = new JournalStorageDto();
-        DictionaryEmployee employeeByCode = employeeClient.getEmployeeByCode(journalStorage.getEmployee());
-        DictionaryEmployee employeeSecurityByCode = employeeClient.getEmployeeByCode(journalStorage.getSecurityEmployee());
-        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-        dto.number = journalStorage.getStorage().getNumber();
-        
-        dto.capacity = journalStorage.getStorage().getCapacity();
-        dto.measure = journalStorage.getStorage().getMeasure().getTitle();
-        if(journalStorage.getStorage().getDateRegistration() != null) {
-            Date dateRegistration = journalStorage.getStorage().getDateRegistration();
-            dto.dateRegistration = date.format(dateRegistration);
-        } else {
-            dto.dateRegistration = "";
-        }
-        dto.id = journalStorage.getId();
-        dto.employee = employeeByCode.getSurname() + " " + employeeByCode.getName().substring(0, 1) + ". " + employeeByCode.getMiddlename().substring(0, 1) + ".";
-        dto.employeeSecurity = employeeSecurityByCode.getSurname() + " " + employeeSecurityByCode.getName().substring(0, 1) + ". " + employeeSecurityByCode.getMiddlename().substring(0, 1) + ".";
-        dto.fromPlace = journalStorage.getStorage().getFromPlace();
-        dto.manufactureNumber = journalStorage.getStorage().getManufactureNumber();
-        dto.pcNumber = journalStorage.getPcNumber();
-        dto.storageType = journalStorage.getStorage().getStorageType().toString();
-        dto.tag = journalStorage.getStorage().getTag();
-        dto.type = journalStorage.getStorage().getType();
-        dto.signEmployee = journalStorage.isSignEmployee();
-        dto.signToBack = journalStorage.isSignToBack();
-        dto.comment = journalStorage.getComment();
-        dto.RegistrationEndSign = journalStorage.getRegistrationEndSign();
-        if(journalStorage.getGetBackToSecurityUser() != null) {
-            
-           Date dateGetBack = journalStorage.getGetBackToSecurityUser();
-           
-           dto.getBackToSecurityUser = date.format(dateGetBack);
-        } else {
-            dto.getBackToSecurityUser = "";
-        }
-        
-        if(journalStorage.getDateSignEmployee() != null) {
-            Date signEmployeeDate = journalStorage.getDateSignEmployee();
-            dto.dateSignEmployee = date.format(signEmployeeDate);
-        } else {
-            dto.dateSignEmployee = "";
-        }
-        
-        dto.storageType = journalStorage.getStorage().getStorageType().toString();
-      
-        
-        
-        return dto;
-    }
+  
     
 }
