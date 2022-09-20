@@ -7,6 +7,7 @@ package com.example.sdlas.entities;
 import com.example.sdlas.model.Measure;
 import com.example.sdlas.model.StorageType;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -31,15 +32,25 @@ public class Storage {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+    @Column(nullable = false)
     private String number;
+    @Column(nullable = false)
     private Date dateRegistration;
+    @Column(nullable = false)
     private String type;
+    @Column(nullable = false)
     private String tag;
+    @Column(nullable = false)
     private String manufactureNumber;
+    @Column(nullable = false)
     private String capacity;
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Measure measure;
+    @Column(nullable = false)
     private String fromPlace;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private StorageType storageType;
 
     public Storage(String number, Date dateRegistration, String type, String tag, String manufactureNumber, String capacity, Measure measure, String fromPlace, StorageType storageType) {

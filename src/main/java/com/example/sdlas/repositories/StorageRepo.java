@@ -5,13 +5,14 @@
 package com.example.sdlas.repositories;
 
 import com.example.sdlas.entities.Storage;
-import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author 041AlikinOS
  */
+@Repository
 public interface StorageRepo extends JpaRepository<Storage, Long> {
    
 }

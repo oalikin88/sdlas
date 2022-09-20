@@ -17,5 +17,6 @@ public class CommentDto {
     
     public Long id;
     public String comment;
+    public String path;
     
 }

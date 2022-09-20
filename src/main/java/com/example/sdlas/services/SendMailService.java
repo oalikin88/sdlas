@@ -33,7 +33,6 @@ private EmployeeClient employeeClient;
         String emailEmployeeSecurity = employeeSecurity.getEmail();
         
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-
             simpleMailMessage.setFrom(emailEmployeeSecurity);
             simpleMailMessage.setTo(emailEmployee);
             simpleMailMessage.setSubject("Подпись за получение " + journalStorage.getStorage().getType());

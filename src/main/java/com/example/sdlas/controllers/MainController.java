@@ -4,16 +4,18 @@
  */
 package com.example.sdlas.controllers;
 
+import com.example.sdlas.auth.AuthenticationService;
 import com.example.sdlas.entities.JournalStorage;
 import com.example.sdlas.mappers.JournalStorageMapper;
 import com.example.sdlas.model.CommentDto;
 import com.example.sdlas.model.SignDto;
 import com.example.sdlas.model.JournalStorageDto;
-import com.example.sdlas.model.StorageType;
+import com.example.sdlas.model.ModelView;
 import com.example.sdlas.repositories.JournalStorageRepo;
 import com.example.sdlas.services.EditCommentService;
 import com.example.sdlas.services.EmployeeService;
 import com.example.sdlas.services.JournalStorageService;
+import com.example.sdlas.services.SearchService;
 import com.example.sdlas.services.SendMailService;
 import com.example.sdlas.services.SignStorageService;
 import java.text.ParseException;
@@ -57,94 +59,61 @@ public class MainController {
     private JournalStorageService journalStorageService;
     @Autowired
     private EmployeeService employeeService;
+    @Autowired
+    private ModelView modelView;
+    @Autowired
+    private AuthenticationService authenticationService;
+    @Autowired
+    private SearchService searchService;
 
     @GetMapping("/{storageName}")
     public String ngmd(@PathVariable String storageName, Model model) {
 
-        if (storageName.equals("ngmd")) {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            UserInfo userDetails = (UserInfo) authentication.getPrincipal();
-            model.addAttribute("person", userDetails);
-            model.addAttribute("storageType", "HDD");
-            model.addAttribute("name", "НЖМД");
-            model.addAttribute("path", "ngmd");
-            model.addAttribute("title", "Журнал учёта НЖМД");
-            List<JournalStorage> journalsStorage = journalStorageRepo.findByStorageStorageType(StorageType.HDD);
+            UserInfo person = authenticationService.authUser();
+            List<DictionaryEmployee> emp = employeeClient.getList();
+            ModelView view = modelView.getView(storageName);
+            List<JournalStorage> journalsStorage = journalStorageRepo.findByStorageStorageType(view.getStorageType());
             List<JournalStorageDto> journalsStorageDto = journalStorageService.listDto(journalsStorage);
-            model.addAttribute("journalStorageDto", journalsStorageDto);
             List<JournalStorage> list = journalsStorage.stream().filter(e -> e.isSignEmployee() == false).collect(Collectors.toList());
             List<JournalStorageDto> journalsStorageDtoFilter = journalStorageService.listDto(list);
-            model.addAttribute("journalStorageDtoFilter", journalsStorageDtoFilter);
-
-        } else if (storageName.equals("card")) {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            UserInfo userDetails = (UserInfo) authentication.getPrincipal();
-            model.addAttribute("person", userDetails);
-            model.addAttribute("storageType", "CARD");
-            model.addAttribute("name", "ключевой носитель");
-            model.addAttribute("path", "card");
-            List<JournalStorage> journalsStorage = journalStorageRepo.findByStorageStorageType(StorageType.CARD);
-            List<JournalStorageDto> journalsStorageDto = journalStorageService.listDto(journalsStorage);
+            model.addAttribute("storageType", view.getStorageType().toString());
+            model.addAttribute("person", person);
+            model.addAttribute("title", view.getTitle());
+            model.addAttribute("path", view.getPath());
+            model.addAttribute("name", view.getName());
             model.addAttribute("journalStorageDto", journalsStorageDto);
-        } else {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            UserInfo userDetails = (UserInfo) authentication.getPrincipal();
-            model.addAttribute("person", userDetails);
-            model.addAttribute("storageType", "USB");
-            model.addAttribute("name", "USB, CD, DVD");
-            model.addAttribute("path", "usb");
-            List<JournalStorage> journalsStorage = journalStorageRepo.findByStorageStorageType(StorageType.USB);
-            List<JournalStorageDto> journalsStorageDto = journalStorageService.listDto(journalsStorage);
-            model.addAttribute("journalStorageDto", journalsStorageDto);
-        }
-        List<DictionaryEmployee> emp = employeeClient.getList();
+            model.addAttribute("journalStorageDtoFilter", journalsStorageDtoFilter);    
+            model.addAttribute("employee", emp);
 
-        model.addAttribute("employee", emp);
         return storageName;
     }
 
-    @PostMapping(path = "/ngmd", consumes = {MediaType.ALL_VALUE})
-    public String addHdd(JournalStorageDto dto, Map<String, Object> model) throws ParseException {
+    @PostMapping(path = "/{storageName}", consumes = {MediaType.ALL_VALUE})
+    public String addHdd(@PathVariable String storageName, JournalStorageDto dto, Map<String, Object> model) throws ParseException {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserInfo userDetails = (UserInfo) authentication.getPrincipal();
-        dto.setEmployeeSecurity(userDetails.getUsername());
+        UserInfo person = authenticationService.authUser();
+        dto.setEmployeeSecurity(person.getUsername());
         JournalStorage journalStorage = storageMapper.JournalStorageDtoToJournalStorage(dto);
         List<DictionaryEmployee> emp = employeeClient.getList();
+        ModelView view = modelView.getView(storageName);
         journalStorageRepo.save(journalStorage);
         sendMailService.sendMail(journalStorage);
-        List<JournalStorage> journalsStorage = journalStorageRepo.findByStorageStorageType(StorageType.HDD);
+        List<JournalStorage> journalsStorage = journalStorageRepo.findByStorageStorageType(view.getStorageType());
         List<JournalStorageDto> journalsStorageDto = journalStorageService.listDto(journalsStorage);
         List<JournalStorage> list = journalsStorage.stream().filter(e -> e.isSignEmployee() == false).collect(Collectors.toList());
         List<JournalStorageDto> journalsStorageDtoFilter = journalStorageService.listDto(list);
         model.put("journalStorageDtoFilter", journalsStorageDtoFilter);
         model.put("journalStorageDto", journalsStorageDto);
-        model.put("person", userDetails);
+        model.put("person", person);
         model.put("employee", emp);
-        model.put("name", "НЖМД");
-        model.put("path", "ngmd");
-        model.put("storageType", "HDD");
-        model.put("title", "Журнал учёта НЖМД");
-        return "/ngmd";
+        model.put("name", view.getName());
+        model.put("path", view.getPath());
+        model.put("storageType", view.getStorageType().toString());
+        model.put("title", view.getTitle());
+        return view.getPath();
     }
 
-    @PostMapping(path = "/usb", consumes = {MediaType.ALL_VALUE})
-    public String addUsb(JournalStorageDto dto, Map<String, Object> model) throws ParseException {
-
-        JournalStorage journalStorage = storageMapper.JournalStorageDtoToJournalStorage(dto);
-        journalStorageRepo.save(journalStorage);
-
-        Iterable<JournalStorage> journalsStorage = journalStorageRepo.findByStorageStorageType(StorageType.USB);
-    
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserInfo userDetails = (UserInfo) authentication.getPrincipal();
-        model.put("person", userDetails);
-        model.put("journalStorage", journalsStorage);
-        model.put("name", "USB, CD, DVD");
-        model.put("path", "usb");
-        model.put("storageType", "USB");
-        return "/usb";
-    }
+   
     // @PreAuthorize("principal.orgCode == '041-000-5570'")
 
     @GetMapping("/main")
@@ -156,23 +125,7 @@ public class MainController {
     }
 
 
-    @PostMapping(path = "/card", consumes = {MediaType.ALL_VALUE})
-    public String addKey(JournalStorageDto dto, Map<String, Object> model) throws ParseException {
-
-        JournalStorage journalStorage = storageMapper.JournalStorageDtoToJournalStorage(dto);
-        journalStorageRepo.save(journalStorage);
-
-        Iterable<JournalStorage> journalsStorage = journalStorageRepo.findByStorageStorageType(StorageType.CARD);
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserInfo userDetails = (UserInfo) authentication.getPrincipal();
-        model.put("person", userDetails);
-        model.put("journalStorage", journalsStorage);
-        model.put("name", "ключевой носитель");
-        model.put("path", "card");
-        model.put("storageType", "CARD");
-        return "/card";
-
-    }
+   
 
     @GetMapping("/myaccount")
     public String getData(Model model) {
@@ -206,16 +159,22 @@ public class MainController {
 
     @PostMapping("/sign")
     public String putSignSecurityWorker(SignDto signDto, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserInfo userDetails = (UserInfo) authentication.getPrincipal();
+        model.addAttribute("person", userDetails);
         model.addAttribute("dto", signDto);
         signStorageService.signSecurityWorker(signDto);
-        return "redirect:/ngmd";
+        return "redirect:/"+signDto.path;
     }
 
     @PostMapping("/comment")
     public String comment(CommentDto dto, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserInfo userDetails = (UserInfo) authentication.getPrincipal();
+        model.addAttribute("person", userDetails);
         model.addAttribute("dto", dto);
         editCommentService.editComment(dto);
-        return "redirect:/ngmd";
+        return "redirect:/"+dto.path;
     }
 
     @PostMapping("/edit")
@@ -250,6 +209,24 @@ public class MainController {
 
         journalStorageService.deleteJournal(id);
         return "redirect:/ngmd";
+    }
+    
+    @GetMapping("/search")
+    public String search(String request, Model model) {
+          
+        UserInfo person = authenticationService.authUser();
+        ModelView view = modelView.getView("search");
+        List<JournalStorage> searchList = searchService.searchList(request);
+        List<JournalStorageDto> journalsStorageDto = journalStorageService.listDto(searchList);
+        model.addAttribute("person", person);
+        model.addAttribute("journalStorageDto", journalsStorageDto);
+        model.addAttribute("path", view.getPath());
+        model.addAttribute("name", view.getName());
+        model.addAttribute("title", view.getTitle());
+        
+        
+        
+        return "search";
     }
 
 }

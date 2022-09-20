@@ -11,5 +11,9 @@ package com.example.sdlas.model;
 public enum StorageType {
     
     HDD, USB, CARD;
+
+
+    
+    
     
 }

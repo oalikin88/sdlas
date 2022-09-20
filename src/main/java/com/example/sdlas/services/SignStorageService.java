@@ -24,7 +24,7 @@ public class SignStorageService {
     
     public void signEmpoyeeForStorage(SignDto dto) {
         
-        JournalStorage journalStorage = journalStorageRepo.findById(dto.Id).get();
+        JournalStorage journalStorage = journalStorageRepo.findById(dto.id).get();
         journalStorage.setSignEmployee(true);
         journalStorage.setDateSignEmployee(new Date());
         
@@ -33,7 +33,7 @@ public class SignStorageService {
     }
     
     public void signSecurityWorker(SignDto dto) {
-        JournalStorage journalStorage = journalStorageRepo.findById(dto.Id).get();
+        JournalStorage journalStorage = journalStorageRepo.findById(dto.id).get();
         journalStorage.setSignToBack(true);
         journalStorage.setGetBackToSecurityUser(new Date());
         if(!dto.registrationEndSign.isBlank() || !dto.registrationEndSign.isEmpty()) {

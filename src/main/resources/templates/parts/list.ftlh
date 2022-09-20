@@ -1,13 +1,13 @@
 <#macro list item items>
 <div class="container-fluid">
-${.template_name?keep_before(".")}
+
 <#assign emp = "" />
 
 <#list items >
  
 <table class="table caption-top table-striped">
    
-  <caption class="text-center">${name}</caption>
+  <caption class="text-center mb-3">${title}</caption>
   <thead class="table-light">
     <tr class="align-middle text-center">
       <th scope="col">№</th>
@@ -72,6 +72,7 @@ ${.template_name?keep_before(".")}
        <p>${item.number}</p>
          <input type="hidden" name="sign" value="true">
          <input type="hidden" name="id" value="${item.id}">
+         <input type="hidden" name="path" value="${path}">
             <div class="row mb-3">
                         <label for="registrationEndSign" class="col col-form-label">Отметка о снятии с учета, номер документа:</label>
                         <div class="col">
@@ -120,6 +121,7 @@ ${.template_name?keep_before(".")}
 
       <form method="post" action="/comment">
                         <input type="hidden" name="id" value="${item.id}">
+                        <input type="hidden" name="path" value="${path}">
                         <textarea class="form-control" name="comment" placeholder="Примечание">
 <#if item.comment != "null">
 ${item.comment}

@@ -1,11 +1,18 @@
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #0059a9">
+<#assign principal = "041-000-4601" />
   <div class="container-fluid">
+   <#if person.orgCode != principal>
+     <a class="navbar-brand" href="/myaccount">
+    <img src="img/pfr.svg" width="50" alt="ПФР">
+     </a>   
+        <#else>
     <a class="navbar-brand" href="/main">
     <img src="img/pfr.svg" width="50" alt="ПФР">
  </a>
+  </#if>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon">
-<#assign principal = "041-000-4601" />
+
 
 </span>
     </button>
@@ -34,13 +41,14 @@
             
           </ul>
         </li>
-      </#if>
+      
       </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+      <form class="d-flex" method="GET" action="/search">
+        <input class="form-control me-2" type="search" name="request" placeholder="Поиск" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Поиск</button>
       </form>
     </div>
+</#if>
   </div>
 
 </nav>

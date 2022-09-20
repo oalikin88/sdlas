@@ -4,23 +4,16 @@
  */
 package com.example.sdlas.model;
 
-import java.util.Date;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  *
  * @author 041AlikinOS
  */
-@Getter
-@Setter
-public class SignDto {
+public interface StorageName  {
+
+  
+    public void getInfo(StorageType storageType);
     
-    public Long id;
-    public boolean sign;
-    public Date dateSign;
-    public String registrationEndSign;
-    public String path;
-    
+        
     
 }

@@ -7,6 +7,7 @@ package com.example.sdlas.entities;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -33,7 +34,9 @@ public class JournalStorage implements Serializable {
     private Long Id;
     private Date dateSignEmployee;
     private Date getBackToSecurityUser;
+    @Column(nullable = false)
     private String employee;
+    @Column(nullable = false)
     private String securityEmployee;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "storage_id")
@@ -42,20 +45,13 @@ public class JournalStorage implements Serializable {
     private boolean signToBack;
     private String RegistrationEndSign;
     private String comment;
+    @Column(nullable = false)
     private String pcNumber;
 
-    public JournalStorage(Date dateSignEmployee, Date getBackToSecurityUser, String employee, String securityEmployee, Storage storage, boolean signEmployee, boolean signToBack, String RegistrationEndSign, String comment, String pcNumber) {
-        this.dateSignEmployee = dateSignEmployee;
-        this.getBackToSecurityUser = getBackToSecurityUser;
-        this.employee = employee;
-        this.securityEmployee = securityEmployee;
-        this.storage = storage;
-        this.signEmployee = signEmployee;
-        this.signToBack = signToBack;
-        this.RegistrationEndSign = RegistrationEndSign;
-        this.comment = comment;
-        this.pcNumber = pcNumber;
-    }
+
+  
+
+
 
 
 
