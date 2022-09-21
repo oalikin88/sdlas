@@ -66,28 +66,30 @@ public class MainController {
     @Autowired
     private SearchService searchService;
 
+    @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
     @GetMapping("/{storageName}")
     public String ngmd(@PathVariable String storageName, Model model) {
 
-            UserInfo person = authenticationService.authUser();
-            List<DictionaryEmployee> emp = employeeClient.getList();
-            ModelView view = modelView.getView(storageName);
-            List<JournalStorage> journalsStorage = journalStorageRepo.findByStorageStorageType(view.getStorageType());
-            List<JournalStorageDto> journalsStorageDto = journalStorageService.listDto(journalsStorage);
-            List<JournalStorage> list = journalsStorage.stream().filter(e -> e.isSignEmployee() == false).collect(Collectors.toList());
-            List<JournalStorageDto> journalsStorageDtoFilter = journalStorageService.listDto(list);
-            model.addAttribute("storageType", view.getStorageType().toString());
-            model.addAttribute("person", person);
-            model.addAttribute("title", view.getTitle());
-            model.addAttribute("path", view.getPath());
-            model.addAttribute("name", view.getName());
-            model.addAttribute("journalStorageDto", journalsStorageDto);
-            model.addAttribute("journalStorageDtoFilter", journalsStorageDtoFilter);    
-            model.addAttribute("employee", emp);
+        UserInfo person = authenticationService.authUser();
+        List<DictionaryEmployee> emp = employeeClient.getList();
+        ModelView view = modelView.getView(storageName);
+        List<JournalStorage> journalsStorage = journalStorageRepo.findByStorageStorageType(view.getStorageType());
+        List<JournalStorageDto> journalsStorageDto = journalStorageService.listDto(journalsStorage);
+        List<JournalStorage> list = journalsStorage.stream().filter(e -> e.isSignEmployee() == false).collect(Collectors.toList());
+        List<JournalStorageDto> journalsStorageDtoFilter = journalStorageService.listDto(list);
+        model.addAttribute("storageType", view.getStorageType().toString());
+        model.addAttribute("person", person);
+        model.addAttribute("title", view.getTitle());
+        model.addAttribute("path", view.getPath());
+        model.addAttribute("name", view.getName());
+        model.addAttribute("journalStorageDto", journalsStorageDto);
+        model.addAttribute("journalStorageDtoFilter", journalsStorageDtoFilter);
+        model.addAttribute("employee", emp);
 
         return storageName;
     }
 
+    @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
     @PostMapping(path = "/{storageName}", consumes = {MediaType.ALL_VALUE})
     public String addHdd(@PathVariable String storageName, JournalStorageDto dto, Map<String, Object> model) throws ParseException {
 
@@ -113,8 +115,7 @@ public class MainController {
         return view.getPath();
     }
 
-   
-    // @PreAuthorize("principal.orgCode == '041-000-5570'")
+    @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
 
     @GetMapping("/main")
     public String main(Model model) {
@@ -123,9 +124,6 @@ public class MainController {
         model.addAttribute("person", userDetails);
         return "main";
     }
-
-
-   
 
     @GetMapping("/myaccount")
     public String getData(Model model) {
@@ -156,7 +154,7 @@ public class MainController {
         return "account";
     }
 
-
+    @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
     @PostMapping("/sign")
     public String putSignSecurityWorker(SignDto signDto, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -164,9 +162,10 @@ public class MainController {
         model.addAttribute("person", userDetails);
         model.addAttribute("dto", signDto);
         signStorageService.signSecurityWorker(signDto);
-        return "redirect:/"+signDto.path;
+        return "redirect:/" + signDto.path;
     }
 
+    @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
     @PostMapping("/comment")
     public String comment(CommentDto dto, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -174,9 +173,10 @@ public class MainController {
         model.addAttribute("person", userDetails);
         model.addAttribute("dto", dto);
         editCommentService.editComment(dto);
-        return "redirect:/"+dto.path;
+        return "redirect:/" + dto.path;
     }
 
+    @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
     @PostMapping("/edit")
     public String editJournal(Long id, JournalStorageDto dto, Model model) throws ParseException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -184,10 +184,11 @@ public class MainController {
         dto.setEmployeeSecurity(userDetails.getUsername());
         model.addAttribute("person", userDetails);
         journalStorageService.editJournalStorage(dto);
-      
+
         return "redirect:/ngmd";
     }
 
+    @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
     @GetMapping("/edit")
     public String selectJournal(Long id, JournalStorageDto dto, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -204,16 +205,18 @@ public class MainController {
         return "edit";
     }
 
+    @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
     @GetMapping("/delete/{id}")
     public String deleteJournal(@PathVariable Long id, Model model) {
 
         journalStorageService.deleteJournal(id);
         return "redirect:/ngmd";
     }
-    
+
+    @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
     @GetMapping("/search")
     public String search(String request, Model model) {
-          
+
         UserInfo person = authenticationService.authUser();
         ModelView view = modelView.getView("search");
         List<JournalStorage> searchList = searchService.searchList(request);
@@ -223,9 +226,7 @@ public class MainController {
         model.addAttribute("path", view.getPath());
         model.addAttribute("name", view.getName());
         model.addAttribute("title", view.getTitle());
-        
-        
-        
+
         return "search";
     }
 

@@ -4,8 +4,8 @@
 
 <@c.page>
 
-<@buttons.buttons name path />
+
 
 <@list.list journalStorageDto journalStorageDto />
-
+<@buttons.buttons name path />
 </@c.page>

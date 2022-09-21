@@ -1,11 +1,11 @@
 <#macro list item items>
-<div class="container-fluid">
+<div class="container-fluid" id="content">
 
 <#assign emp = "" />
 
 <#list items >
  
-<table class="table caption-top table-striped">
+<table class="table caption-top table-striped" id="table">
    
   <caption class="text-center mb-3">${title}</caption>
   <thead class="table-light">
@@ -61,15 +61,15 @@
 
 <!-- Modal -->
 <div class="modal fade" id="signSecurityWorker${item?index}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <h5 class="modal-title text-center" id="staticBackdropLabel">Расписка в обратном приёме</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
       <form method="post" action="/sign">
-       <p>${item.number}</p>
+       <p class="text-center fw-bold mb-3">Устройство ${item.type} с учётным номером: ${item.number}</p>
          <input type="hidden" name="sign" value="true">
          <input type="hidden" name="id" value="${item.id}">
          <input type="hidden" name="path" value="${path}">
@@ -79,7 +79,7 @@
                         <input type="text" class="form-control" name="registrationEndSign" placeholder="Укажите номер документа" />
                         </div>
                         </div>
-      Подписать?
+      <h5 class="text-center">Подписать?</h5>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>

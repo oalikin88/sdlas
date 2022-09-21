@@ -8,14 +8,18 @@
 </script>
 <div class="mt-3">
   <div class="row">
+
     <div class="col text-start">
-     	<!-- Button trigger modal -->
+<button type="button" onclick="history.back();" class="btn btn-primary" data-bs-dismiss="modal">Назад</button>
+</div>
+
+  
+    <div class="col text-end">
+      <!-- Button trigger modal -->
+     	
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStorage">
  Добавить ${name}
 </button>
-    </div>
-    <div class="col text-end">
-      <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit">
   Редактировать запись в журнале
 </button>

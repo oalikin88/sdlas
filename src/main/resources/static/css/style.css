@@ -62,3 +62,12 @@ svg:hover {
 #employee-select {
   word-wrap: normal;
 }
+
+#content {
+    
+    height: 80vh; /* 100vh - 100% от высоты viewport(окна браузера) */
+    overflow-y: scroll;
+}
+    
+
+}
