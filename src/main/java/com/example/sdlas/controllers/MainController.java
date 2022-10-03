@@ -4,8 +4,10 @@
  */
 package com.example.sdlas.controllers;
 
+import com.example.sdlas.SdlasApplication;
 import com.example.sdlas.auth.AuthenticationService;
 import com.example.sdlas.entities.JournalStorage;
+import com.example.sdlas.exceptions.MyException;
 import com.example.sdlas.mappers.JournalStorageMapper;
 import com.example.sdlas.model.CommentDto;
 import com.example.sdlas.model.SignDto;
@@ -22,6 +24,8 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpServletRequest;
+import org.hibernate.annotations.common.util.impl.Log_$logger;
 import org.opfr.springBootStarterDictionary.clientImpl.EmployeeClient;
 import org.opfr.springBootStarterDictionary.models.DictionaryEmployee;
 import org.opfr.springbootstarterauthsso.security.UserInfo;
@@ -32,6 +36,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,6 +71,32 @@ public class MainController {
     @Autowired
     private SearchService searchService;
 
+    public static String ERRORPAGE = "/error";
+    
+  @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")   
+  @ExceptionHandler({MyException.class, Exception.class, RuntimeException.class})
+  public String handleError(HttpServletRequest req, Exception ex, Model model) {
+      
+      
+    
+    UserInfo person = authenticationService.authUser();
+    
+    
+    model.addAttribute("exception", ex);
+    model.addAttribute("url", req.getRequestURL());
+    model.addAttribute("person", person);
+    for(StackTraceElement string : ex.getStackTrace()) {
+    SdlasApplication.log.error("Request: " + req.getRequestURL() + " raised " + string);
+    }
+  
+    
+    
+    
+    return "/error";
+  }
+  
+    
+    
     @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
     @GetMapping("/{storageName}")
     public String ngmd(@PathVariable String storageName, Model model) {
@@ -91,11 +122,14 @@ public class MainController {
 
     @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
     @PostMapping(path = "/{storageName}", consumes = {MediaType.ALL_VALUE})
-    public String addHdd(@PathVariable String storageName, JournalStorageDto dto, Map<String, Object> model) throws ParseException {
+    public String addHdd(@PathVariable String storageName, JournalStorageDto dto, Map<String, Object> model) throws ParseException, MyException {
 
         UserInfo person = authenticationService.authUser();
         dto.setEmployeeSecurity(person.getUsername());
-        JournalStorage journalStorage = storageMapper.JournalStorageDtoToJournalStorage(dto);
+        JournalStorage journalStorage = null;
+        
+        journalStorage = storageMapper.JournalStorageDtoToJournalStorage(dto);
+        
         List<DictionaryEmployee> emp = employeeClient.getList();
         ModelView view = modelView.getView(storageName);
         journalStorageRepo.save(journalStorage);
@@ -175,7 +209,7 @@ public class MainController {
         editCommentService.editComment(dto);
         return "redirect:/" + dto.path;
     }
-
+    
     @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
     @PostMapping("/edit")
     public String editJournal(Long id, JournalStorageDto dto, Model model) throws ParseException {
@@ -229,5 +263,8 @@ public class MainController {
 
         return "search";
     }
-
+   
+ 
+        
 }
+    

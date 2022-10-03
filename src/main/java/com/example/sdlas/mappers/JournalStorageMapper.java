@@ -6,6 +6,7 @@ package com.example.sdlas.mappers;
 
 import com.example.sdlas.entities.JournalStorage;
 import com.example.sdlas.entities.Storage;
+import com.example.sdlas.exceptions.MyException;
 import com.example.sdlas.model.JournalStorageDto;
 import com.example.sdlas.model.Measure;
 import com.example.sdlas.model.StorageType;
@@ -30,7 +31,7 @@ public class JournalStorageMapper {
     
 
     
-    public JournalStorage JournalStorageDtoToJournalStorage(JournalStorageDto dto) throws ParseException {
+    public JournalStorage JournalStorageDtoToJournalStorage(JournalStorageDto dto) throws ParseException, MyException {
         
 
         Storage storage = new Storage();
@@ -76,12 +77,16 @@ public class JournalStorageMapper {
             storage.setManufactureNumber("");
         }
         
+        
         if(dto.capacity != null) {
+            if(!dto.capacity.matches("\\d+")) {
+                 throw new MyException("Недопустимое значение");            
+            }
             storage.setCapacity(dto.capacity);
             
-        } else {
-            storage.setCapacity("");
-        }
+        } 
+        
+        
         if(dto.measure != null) {
             if(dto.measure.equals("Тб")) {
                 storage.setMeasure(Measure.TERABYTE);
