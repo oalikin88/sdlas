@@ -67,7 +67,19 @@ svg:hover {
     
     height: 80vh; /* 100vh - 100% от высоты viewport(окна браузера) */
     overflow-y: scroll;
+    box-shadow: 0 6px 4px -4px rgba(0, 0, 0, .2);
 }
+#leftbtnblock {
+    margin-left: 15px;
+}
+
+#backbutton2 {
+    margin-left: 15px;
+}
+
+#btnrightblock {
     
+    margin-right: 15px;
+}
 
 }

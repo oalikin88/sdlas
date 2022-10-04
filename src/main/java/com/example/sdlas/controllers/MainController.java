@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
-import org.hibernate.annotations.common.util.impl.Log_$logger;
 import org.opfr.springBootStarterDictionary.clientImpl.EmployeeClient;
 import org.opfr.springBootStarterDictionary.models.DictionaryEmployee;
 import org.opfr.springbootstarterauthsso.security.UserInfo;
@@ -71,7 +70,6 @@ public class MainController {
     @Autowired
     private SearchService searchService;
 
-    public static String ERRORPAGE = "/error";
     
   @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")   
   @ExceptionHandler({MyException.class, Exception.class, RuntimeException.class})
@@ -86,7 +84,7 @@ public class MainController {
     model.addAttribute("url", req.getRequestURL());
     model.addAttribute("person", person);
     for(StackTraceElement string : ex.getStackTrace()) {
-    SdlasApplication.log.error("Request: " + req.getRequestURL() + " raised " + string);
+    SdlasApplication.log.error("User: " + person.getUserCode() + ". Request: " + req.getRequestURL() + " raised " + string);
     }
   
     
@@ -132,6 +130,9 @@ public class MainController {
         
         List<DictionaryEmployee> emp = employeeClient.getList();
         ModelView view = modelView.getView(storageName);
+        if(!journalStorageRepo.findByStorageNumber(journalStorage.getStorage().getNumber()).isEmpty()) {
+            throw new MyException("Устройство с таким учётным номером уже есть в журнале");
+        }
         journalStorageRepo.save(journalStorage);
         sendMailService.sendMail(journalStorage);
         List<JournalStorage> journalsStorage = journalStorageRepo.findByStorageStorageType(view.getStorageType());
@@ -150,7 +151,6 @@ public class MainController {
     }
 
     @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
-
     @GetMapping("/main")
     public String main(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

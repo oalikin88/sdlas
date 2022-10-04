@@ -2,6 +2,14 @@
 
 
 <@c.page>
+
+<script>
+ jQuery(function($){
+                            $("#number").mask("999.99-999999",{placeholder:""});
+                            
+                         });
+</script>
+
 <div class="col text-center">
 <h5 class="mt-3 mb-3" style="font-weight:bold;">Редактирование записи id=${journalStorageDto.id} журнала учёта ${journalStorageDto.type}</h5>
 </div>
@@ -13,7 +21,7 @@
                         <div class="col-sm-10">
                         
                         <input type="hidden" name="storageType" value="${journalStorageDto.storageType}">
-                        <input type="text" class="form-control" name="number" placeholder="Введите учётный номер" value="${journalStorageDto.number}"/>      
+                        <input type="text" class="form-control" id="number" name="number" placeholder="Введите учётный номер" value="${journalStorageDto.number}"/>      
                         </div>
                         </div>
                     <div class="row mb-3">

@@ -10,6 +10,7 @@ import com.example.sdlas.exceptions.MyException;
 import com.example.sdlas.model.JournalStorageDto;
 import com.example.sdlas.model.Measure;
 import com.example.sdlas.model.StorageType;
+import com.example.sdlas.services.JournalStorageService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,19 +24,26 @@ import org.springframework.stereotype.Component;
  * @author 041AlikinOS
  */
 @Component
-public class JournalStorageMapper {
+public class JournalStorageMapper  {
     
     @Autowired
     private EmployeeClient employeeClient;
     
+    private String pastDate = "2000-01-01";
     
+        Date pastTargetDate;
+        Date dateNow = JournalStorageService.removeTime(new Date(System.currentTimeMillis()));
 
+    public JournalStorageMapper() throws ParseException {
+        this.pastTargetDate = JournalStorageService.getDate(pastDate);
+    }
     
     public JournalStorage JournalStorageDtoToJournalStorage(JournalStorageDto dto) throws ParseException, MyException {
         
 
         Storage storage = new Storage();
         JournalStorage journalStorage = new JournalStorage();
+        
 
        if(dto.storageType.equals("HDD")) {
            storage.setStorageType(StorageType.HDD);
@@ -53,9 +61,14 @@ public class JournalStorageMapper {
         }
         
         if(dto.dateRegistration != null) {
-            storage.setDateRegistration(dto.getConvertedDate());
+            Date selectDate = JournalStorageService.removeTime(dto.getConvertedDate());
+            if(selectDate.after(dateNow)) {
+                throw new MyException("Невозможно установить дату позже сегодняшнего дня");
+            } else if(selectDate.before(pastTargetDate)) {
+                throw new MyException("Невозможно установить указанную дату");
+            }
+            storage.setDateRegistration(selectDate);        
         } else {
-            Date dateNow = new Date(System.currentTimeMillis()); 
             storage.setDateRegistration(dateNow);
         }
         

@@ -9,12 +9,12 @@
 <div class="mt-3">
   <div class="row">
 
-    <div class="col text-start">
-<button type="button" onclick="history.back();" class="btn btn-primary" data-bs-dismiss="modal">Назад</button>
+    <div class="col text-start" id="leftbtnblock">
+<button type="button"  onclick="history.back();" class="btn btn-primary" data-bs-dismiss="modal">Назад</button>
 </div>
 
   
-    <div class="col text-end">
+    <div class="col text-end" id="btnrightblock">
       <!-- Button trigger modal -->
      	
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStorage">
@@ -211,7 +211,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="staticBackdropLabel">Выберите запись в журнале</h5>
@@ -225,7 +225,7 @@
 
   <option selected>Выберите запись в журнале</option>
 <#list journalStorageDtoFilter as journal>
-<option value="${journal.id}">${journal.number}, ${journal.employee}</option>
+<option value="${journal.id}">устройство: ${journal.number}, заводской номер: ${journal.manufactureNumber}</option>
 
 <#else>
 Отсутствуют записи в журнале, которые возможно редактировать  

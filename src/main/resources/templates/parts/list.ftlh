@@ -31,18 +31,18 @@
 <#items as item>
 
     <tr class="text-end" >
-      <th>${item?index + 1}
+      <th class="align-middle">${item?index + 1}
 
 </th>
-      <td>${item.number}</td>
-      <td>${item.dateRegistration}</td>
-      <td>${item.type}</td>
-      <td>${item.tag}</td>
-      <td>${item.manufactureNumber}</td>
-      <td>${item.capacity} ${item.measure}</td>
-      <td>${item.fromPlace}</td>
-      <td>${item.pcNumber}</td>     
-      <td>${item.employee} 
+      <td class="align-middle">${item.number}</td>
+      <td class="align-middle">${item.dateRegistration}</td>
+      <td class="align-middle">${item.type}</td>
+      <td class="align-middle">${item.tag}</td>
+      <td class="align-middle">${item.manufactureNumber}</td>
+      <td class="align-middle">${item.capacity} ${item.measure}</td>
+      <td class="align-middle">${item.fromPlace}</td>
+      <td class="align-middle">${item.pcNumber}</td>     
+      <td class="align-middle">${item.employee} 
 <#assign emp = item.employee?keep_before(" ")>
         <#if item.signEmployee?c == "false"> <p style="color:red;">ожидается подпись</p>
         <#else>
@@ -50,9 +50,9 @@
             ${item.dateSignEmployee!""}
         </#if>
       </td>  
-      <td>
+      <td class="align-middle">
 <#if item.signToBack?c == "false" && item.signEmployee?c == "true">
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signSecurityWorker${item?index}">
+<button type="button" class="btn btn-primary align-items-center" data-bs-toggle="modal" data-bs-target="#signSecurityWorker${item?index}">
  Подписать
 </button>
 
@@ -61,15 +61,15 @@
 
 <!-- Modal -->
 <div class="modal fade" id="signSecurityWorker${item?index}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title text-center" id="staticBackdropLabel">Расписка в обратном приёме</h5>
+        <h5 class="modal-title text-center" id="staticBackdropLabel">Устройство ${item.type} с учётным номером: ${item.number}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
       <form method="post" action="/sign">
-       <p class="text-center fw-bold mb-3">Устройство ${item.type} с учётным номером: ${item.number}</p>
+      
          <input type="hidden" name="sign" value="true">
          <input type="hidden" name="id" value="${item.id}">
          <input type="hidden" name="path" value="${path}">
@@ -79,7 +79,7 @@
                         <input type="text" class="form-control" name="registrationEndSign" placeholder="Укажите номер документа" />
                         </div>
                         </div>
-      <h5 class="text-center">Подписать?</h5>
+      <h5 class="text-center">Поставить подпись в обратном приёме?</h5>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
@@ -95,8 +95,8 @@
             
 </#if>
 </td>
-      <td>${item.registrationEndSign!""}</td>
-      <td>${item.comment!""}
+      <td class="align-middle">${item.registrationEndSign!""}</td>
+      <td class="align-middle">${item.comment!""}
 <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#editComment${item?index}">
  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
   <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/>
@@ -108,7 +108,7 @@
 <!-- Modal -->
 <div class="modal fade" id="editComment${item?index}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 
-<div class="modal-dialog">
+<div class="modal-dialog modal-dialog-centered">
 
     <div class="modal-content">
       <div class="modal-header">

@@ -19,7 +19,7 @@ import lombok.Setter;
 public class JournalStorageDto {
     
     public static final SimpleDateFormat dateFormat
-      = new SimpleDateFormat("dd.MM.yyyy");
+      = new SimpleDateFormat("yyyy-MM-dd");
     public Long id;
     public String number;
     public String dateRegistration;

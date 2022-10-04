@@ -16,10 +16,6 @@ public class MyException extends RuntimeException {
         
     } 
 
-    @Override
-    public String toString() {
-        return "/error";
-    }
+   
     
 }
-// Остановился на разработке ExceptionHandler

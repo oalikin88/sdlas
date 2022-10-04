@@ -10,12 +10,14 @@
 <br>
 <br>
 <br>
+<div class="content" id="errorblock">
 <h2 class="text-center">Что-то пошло не так... </h2>
 <br>
 <br>
 <br>
-<p class="text-center">Ошибка: ${exception.getMessage()}</p>
 
+<p class="text-center">Ошибка: ${exception.getMessage()}</p>
+</div>
 </div>
 </div>
 </div>

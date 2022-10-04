@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #0059a9">
 
   <div class="container-fluid">
-   <#if person.orgCode != "041-000-4601" >
+   <#if person.orgCode != "041-000-5570" >
      <a class="navbar-brand" href="/myaccount">
     <img src="img/pfr.svg" width="50" alt="ПФР">
      </a>   
@@ -22,7 +22,7 @@
         <li class="nav-item">
           <a class="nav-link text-white" aria-current="page" href="/myaccount">Личный кабинет</a>
         </li>
-        <#if person.orgCode != "041-000-4601"  >
+        <#if person.orgCode != "041-000-5570"  >
     
 
         <#else>
