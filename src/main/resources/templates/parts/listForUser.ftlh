@@ -25,14 +25,14 @@
 <#items as item>
 <#assign index = index+1>
     <tr class="text-end">
-      <th>${index}</th>
-      <td>${item.number}</td>
-      <td>${item.type}</td>
-      <td>${item.tag}</td>
-      <td>${item.manufactureNumber}</td>
-      <td>${item.capacity} ${item.measure}</td>
-      <td>${item.pcNumber}</td>     
-      <td>${item.employee} 
+      <th class="align-middle">${index}</th>
+      <td class="align-middle">${item.number}</td>
+      <td class="align-middle">${item.type}</td>
+      <td class="align-middle">${item.tag}</td>
+      <td class="align-middle">${item.manufactureNumber}</td>
+      <td class="align-middle">${item.capacity} ${item.measure}</td>
+      <td class="align-middle">${item.pcNumber}</td>     
+      <td class="align-middle">${item.employee} 
 <#if item.signEmployee?c == "false">
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sign${index}" style="margin-left:15px;">
  Подписать
