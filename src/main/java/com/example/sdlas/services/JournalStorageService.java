@@ -109,7 +109,6 @@ public class JournalStorageService {
         
        }
        
-       
        public static Date getDate(String date) throws ParseException {
            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
            Date curentDate = dateFormat.parse(date);

@@ -33,32 +33,37 @@
                     <div class="row mb-3">
                         <label for="type" class="col-sm-2 col-form-label">Тип носителя:</label>
                         <div class="col-sm-10">
+                         <#list ["НЖМД(п)", "DVD-R", "DVD-RW", "CD-R", "CD-RW", "МЛ", "USB"] >
                         <select class="form-select" name="type" aria-label="Укажите тип носителя">
                           <option selected>${journalStorageDto.type}</option>
                           <#if journalStorageDto.storageType == "CARD">
-                          <option value="СНИ">СНИ</option>
+                        
                           <#elseif journalStorageDto.storageType == "HDD">
-                          <option value="НЖМД">НЖМД</option>
+                          
                            <#else>
-                           <option value="НЖМД(п)">НЖМД(п)</option>
-                           <option value="DVD-R">DVD-R</option>
-                           <option value="DVD-RW">DVD-RW</option>
-                           <option value="CD-R">CD-R</option>
-                           <option value="CD-RW">CD-RW</option>
-                           <option value="МЛ">МЛ</option>
-                           <option value="USB">USB</option>
+                            <#items as item>
+                                <#if item != journalStorageDto.type >
+                           <option value="${item}">${item}</option>
+                           </#if>
+                         </#items>
                            </#if>
                         </select>
+                        </#list>
                         </div>
                         </div>
                     <div class="row mb-3">
                         <label for="tag" class="col-sm-2 col-form-label">Метка категории носителя:</label>
                         <div class="col-sm-10">
+                        <#list ["Конфиденциально", "Ключ"] >
                         <select class="form-select" name="tag" aria-label="Укажите метку категории носителя">
                           <option selected>${journalStorageDto.tag}</option>  
-                          <option value="Конфиденциально">Конфиденциально</option>   
-                          <option value="Ключ">Ключ</option>
+                           <#items as item>
+                            <#if item != journalStorageDto.tag >
+                          <option value="${item}">${item}</option>   
+                            </#if>   
+                          </#items>
                         </select>
+                        </#list>
                         </div>
                         </div>
                     <div class="row mb-3">
@@ -67,34 +72,40 @@
                         <input type="text" class="form-control" name="manufactureNumber" placeholder="Укажите заводской или входящий номер" value="${journalStorageDto.manufactureNumber}" />
                         </div>
                         </div>
-                    <div class="row mb-3">
-                  
-                        
+                    <div class="row mb-3">                                         
                         <label for="capacity" class="col-sm-2 col-form-label">Ёмкость носителя(длина ленты):</label>
                         <div class="col-sm-5">
                         <input type="text" class="form-control" name="capacity" placeholder="Укажите ёмкость носителя(длину ленты)" value="${journalStorageDto.capacity}" />
-
+                <#list ["Тб", "Гб", "Мб", "Кб"]>
                         </div>
-                         <div class="col-sm-5">
-                        <select class="form-select" name="measure" aria-label="единица измерения">
-                          <option selected>${journalStorageDto.measure}</option>  
-                          <option value="Тб">Тб</option>   
-                          <option value="Гб">Гб</option>   
-                          <option value="Мб">Мб</option>
-                          <option value="Кб">Кб</option>
+                         <div class="col-sm-5">     
+                        <select class="form-select" name="measure" aria-label="единица измерения">                            
+                          <option selected>${journalStorageDto.measure}</option> 
+                          <#items as item>
+                           <#if item != journalStorageDto.measure >
+                          <option value="${item}">${item}</option>
+                            </#if>   
+                          </#items>
+                          
                         </select>
-                        
+                    
+                </#list>
                         </div>
                         <input type="hidden" id="id" name="id" value="${journalStorageDto.id}" >
                         </div>
                     <div class="row mb-3">
                         <label for="fromPlace" class="col-sm-2 col-form-label">Откуда поступил:</label>
                         <div class="col-sm-10">
+                            <#list ["Склад", "Сбербанк"] >
                         <select class="form-select" name="fromPlace" aria-label="Укажите откуда поступил">
-                          <option selected>${journalStorageDto.fromPlace}</option>  
-                          <option value="Склад">Склад</option>   
-                          <option value="Сбербанк">Сбербанк</option>
+                          <option selected>${journalStorageDto.fromPlace}</option> 
+                          <#items as item>
+                          <#if item != journalStorageDto.fromPlace >
+                          <option value="${item}">${item}</option>   
+                          </#if>
+                          </#items>
                         </select>
+                        </#list>
                         </div>
                         </div>
                     <div class="row mb-3">
@@ -123,8 +134,9 @@
                         <select id="employee-select" name="employee" class="selectized" placeholder="Выберите работника">
                     <option selected value="${employeeByCode.code}">${employeeByCode.surname} ${employeeByCode.name} ${employeeByCode.middlename}</option>
                         <#items as employee>
-                          
+                          <#if employee.code != employeeByCode.code >
                           <option value="${employee.code}">${employee.surname} ${employee.name} ${employee.middlename}</option>
+                          </#if>
                           </#items>
 
                         </select>
