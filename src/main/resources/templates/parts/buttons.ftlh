@@ -22,6 +22,7 @@
 </button>
 
 <#assign count = 0 />
+<#if .globals.elements??>
 <#list .globals.elements as e>
 
     <#if e.signEmployee?c == "false" >
@@ -29,6 +30,7 @@
            
                     </#if>
     </#list>
+</#if>
 
     <#if !.globals.elements?? || count == 0 >
 <button type="button" class="btn btn-outline-primary" disabled>Редактировать запись в журнале</button>
