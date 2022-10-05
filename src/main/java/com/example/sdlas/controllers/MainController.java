@@ -70,8 +70,7 @@ public class MainController {
     @Autowired
     private SearchService searchService;
 
-    
-  @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")   
+
   @ExceptionHandler({MyException.class, Exception.class, RuntimeException.class})
   public String handleError(HttpServletRequest req, Exception ex, Model model) {
       
@@ -213,10 +212,12 @@ public class MainController {
     @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
     @PostMapping("/edit")
     public String editJournal(Long id, JournalStorageDto dto, Model model) throws ParseException {
+        String path = null;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserInfo userDetails = (UserInfo) authentication.getPrincipal();
         dto.setEmployeeSecurity(userDetails.getUsername());
         model.addAttribute("person", userDetails);
+        model.getAttribute(path);
         journalStorageService.editJournalStorage(dto);
 
         return "redirect:/ngmd";
@@ -225,6 +226,7 @@ public class MainController {
     @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
     @GetMapping("/edit")
     public String selectJournal(Long id, JournalStorageDto dto, Model model) {
+        String path = null;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserInfo userDetails = (UserInfo) authentication.getPrincipal();
         JournalStorage journalStorage = journalStorageRepo.findById(id).get();
@@ -236,21 +238,23 @@ public class MainController {
         model.addAttribute("title", "Редактирование записи в журнале");
         model.addAttribute("journalStorageDto", journalStorageDto);
         model.addAttribute("person", userDetails);
+        model.getAttribute(path);
         return "edit";
     }
 
     @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
     @GetMapping("/delete/{id}")
     public String deleteJournal(@PathVariable Long id, Model model) {
-
+        String path = null;
+        model.getAttribute(path);
         journalStorageService.deleteJournal(id);
-        return "redirect:/ngmd";
+        return "redirect:/main";
     }
 
     @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
     @GetMapping("/search")
     public String search(String request, Model model) {
-
+        
         UserInfo person = authenticationService.authUser();
         ModelView view = modelView.getView("search");
         List<JournalStorage> searchList = searchService.searchList(request);

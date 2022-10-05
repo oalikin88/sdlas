@@ -164,10 +164,12 @@
 <button type="button" onclick="history.back();" class="btn btn-primary" data-bs-dismiss="modal">Отмена</button>
 </div>
 <div class="col text-center">
-        <a href="/delete/${journalStorageDto.id}" class="btn btn-danger" role="button">Удалить</a>
+        <a href="/delete/${journalStorageDto.id}" class="btn btn-danger" role="button" >Удалить</a>
+        
 </div>
 <div class="col text-end">
         <button type="submit" class="btn btn-warning">Редактировать</button>
+</form>
 </div>
 </div>
 </div>

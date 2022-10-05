@@ -5,9 +5,6 @@
 
 
 <@c.page>
-
-
 <@list.list journalStorageDto journalStorageDto />
 <@buttons.buttons name path />
-
 </@c.page>

@@ -4,7 +4,7 @@
 <#assign emp = "" />
 <#assign pagename = .current_template_name?keep_before(".") />
 <#list items >
- 
+ <#global elements = items>
 <table class="table caption-top table-striped" id="table">
    
   <caption class="text-center mb-3">${title}</caption>
@@ -155,5 +155,6 @@ ${item.comment}
 	</#list>
 
 </div>
+
 
 </#macro>

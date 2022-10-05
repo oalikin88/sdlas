@@ -20,13 +20,30 @@
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStorage">
  Добавить ${name}
 </button>
+
+<#assign count = 0 />
+<#list .globals.elements as e>
+
+    <#if e.signEmployee?c == "false" >
+       <#assign count = count + 1>
+           
+                    </#if>
+    </#list>
+
+    <#if !.globals.elements?? || count == 0 >
+<button type="button" class="btn btn-outline-primary" disabled>Редактировать запись в журнале</button>
+<#else>
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit">
-  Редактировать запись в журнале
+  Редактировать запись в журнале 
 </button>
     </div>
 
-   
+   </#if>
 
+ 
+
+
+   
 <!-- Modal -->
 <div class="modal fade" id="addStorage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-xl">
@@ -220,7 +237,6 @@
       <div class="modal-body">
 
       <form method="GET" action="/edit">
- 
       <select class="form-select" name ="id" aria-label="Default select example">
 
   <option selected>Выберите запись в журнале</option>
@@ -236,6 +252,7 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+        
         <button type="submit" class="btn btn-primary">Редактировать</button>
        </form>
       </div>
