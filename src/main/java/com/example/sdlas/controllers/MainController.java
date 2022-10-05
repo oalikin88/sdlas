@@ -260,6 +260,7 @@ public class MainController {
         model.addAttribute("path", view.getPath());
         model.addAttribute("name", view.getName());
         model.addAttribute("title", view.getTitle());
+        model.addAttribute("request", request);
 
         return "search";
     }

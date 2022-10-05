@@ -15,6 +15,7 @@ ${title!"Главное меню"}
 <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
+
 <#include "navbar.ftlh">
 <div class="container-fluid">
 <#nested>

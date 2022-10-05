@@ -2,7 +2,7 @@
 <div class="container-fluid" id="content">
 
 <#assign emp = "" />
-
+<#assign pagename = .current_template_name?keep_before(".") />
 <#list items >
  
 <table class="table caption-top table-striped" id="table">
@@ -139,8 +139,18 @@ ${item.comment}
   </tbody>
 </table>
 	<#else>
-
-	<p>В журнале ещё нет записей</p>
+          
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-sm-12">
+                     <#if .globals.pagename == "search" >
+                        <p class="text-center mt-3">По запросу <span id="request">"${request}"</span> ничего не найдено</p>
+                        <#else>
+                        <p class="text-center mt-3">В журнале ещё нет записей</p>
+                    </#if>
+                </div>
+                </div>
+                </div>
 
 	</#list>
 

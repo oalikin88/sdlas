@@ -82,4 +82,8 @@ svg:hover {
     margin-right: 15px;
 }
 
+#request {
+    background: rgba(204, 0, 51, 0.75);
+}
+
 }

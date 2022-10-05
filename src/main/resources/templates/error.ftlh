@@ -1,4 +1,5 @@
 <#import "parts/common.ftlh" as c>
+<#global pagename = .current_template_name?keep_before(".") >
 <@c.page>
 
 

@@ -1,5 +1,7 @@
 <#import "parts/common.ftlh" as c>
+<#global pagename = .current_template_name?keep_before(".") >
 <@c.page>
+
 <div class="row">
 <div class="col mt-5">
 <div class="text-center fw-bold" id="menu">

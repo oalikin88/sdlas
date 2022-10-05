@@ -2,7 +2,7 @@
 
   <div class="container-fluid">
 
-   <#if person.orgCode != "041-000-5570" >
+   <#if person.orgCode != "041-000-4601" >
      <a class="navbar-brand" href="/myaccount">
     <img src="img/pfr.svg" width="50" alt="ПФР">
      </a>   
@@ -24,7 +24,7 @@
           <a class="nav-link text-white" aria-current="page" href="/myaccount">Личный кабинет</a>
         </li>
 
-        <#if person.orgCode != "041-000-5570"  >
+        <#if person.orgCode != "041-000-4601"  >
     
        
 
@@ -49,7 +49,12 @@
       
       </ul>
       <form class="d-flex" method="GET" action="/search">
-        <input class="form-control me-2" type="search" name="request" placeholder="Поиск" aria-label="Search">
+<#if .globals.pagename == "search" >
+        <input class="form-control me-2" type="search" name="request" placeholder="Поиск" aria-label="Search" value="${request}"  >
+                 <#else> 
+<input class="form-control me-2" type="search" name="request" placeholder="Поиск" aria-label="Search" >
+            </#if>
+          
         <button class="btn btn-outline-success" type="submit">Поиск</button>
       </form>
     </div>
