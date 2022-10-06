@@ -220,7 +220,7 @@ public class MainController {
         model.getAttribute(path);
         journalStorageService.editJournalStorage(dto);
 
-        return "redirect:/ngmd";
+        return "redirect:/main";
     }
 
     @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
