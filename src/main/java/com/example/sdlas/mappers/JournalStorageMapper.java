@@ -62,6 +62,7 @@ public class JournalStorageMapper  {
         
         if(dto.dateRegistration != null) {
             Date selectDate = JournalStorageService.removeTime(dto.getConvertedDate());
+            
             if(selectDate.after(dateNow)) {
                 throw new MyException("Невозможно установить дату позже сегодняшнего дня");
             } else if(selectDate.before(pastTargetDate)) {

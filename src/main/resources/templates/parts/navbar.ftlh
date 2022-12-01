@@ -23,11 +23,10 @@
         <li class="nav-item">
           <a class="nav-link text-white" aria-current="page" href="/myaccount">Личный кабинет</a>
         </li>
-
-        <#if person.orgCode != "041-000-4601"  >
-    
-       
-
+         <li class="nav-item">
+          <a class="nav-link text-white" aria-current="page" href="http://10.41.0.243:9093/doku.php?id=po:учёт_носителей_информации" target="_blank">Справка</a>
+        </li>
+        <#if person.orgCode != "041-000-4601">
         <#else>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -42,10 +41,10 @@
             <li><a class="dropdown-item" href="/usb">Журнал смены парольной документации от эксплуатируемого оборудования</a></li>
             <li><a class="dropdown-item" href="/usb">Журнал учёта опечатывания аппаратных средств</a></li>
             <li><a class="dropdown-item" href="/usb">Журнал учёта ....</a></li>
-            <li><a class="dropdown-item" href="/usb">Журнал учёта ....</a></li-->
-            
+            <li><a class="dropdown-item" href="/usb">Журнал учёта ....</a></li-->           
           </ul>
         </li>
+
       
       </ul>
       <form class="d-flex" method="GET" action="/search">

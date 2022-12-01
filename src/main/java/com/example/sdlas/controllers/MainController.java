@@ -94,7 +94,7 @@ public class MainController {
   
     
     
-    @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
+    @PreAuthorize("principal.orgCode == '041-000-4601'")
     @GetMapping("/{storageName}")
     public String ngmd(@PathVariable String storageName, Model model) {
 
@@ -103,21 +103,19 @@ public class MainController {
         ModelView view = modelView.getView(storageName);
         List<JournalStorage> journalsStorage = journalStorageRepo.findByStorageStorageType(view.getStorageType());
         List<JournalStorageDto> journalsStorageDto = journalStorageService.listDto(journalsStorage);
-        List<JournalStorage> list = journalsStorage.stream().filter(e -> e.isSignEmployee() == false).collect(Collectors.toList());
-        List<JournalStorageDto> journalsStorageDtoFilter = journalStorageService.listDto(list);
         model.addAttribute("storageType", view.getStorageType().toString());
         model.addAttribute("person", person);
         model.addAttribute("title", view.getTitle());
         model.addAttribute("path", view.getPath());
         model.addAttribute("name", view.getName());
         model.addAttribute("journalStorageDto", journalsStorageDto);
-        model.addAttribute("journalStorageDtoFilter", journalsStorageDtoFilter);
+        model.addAttribute("journalStorageDtoFilter", journalsStorageDto);
         model.addAttribute("employee", emp);
 
         return storageName;
     }
 
-    @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
+    @PreAuthorize("principal.orgCode == '041-000-4601'")
     @PostMapping(path = "/{storageName}", consumes = {MediaType.ALL_VALUE})
     public String addHdd(@PathVariable String storageName, JournalStorageDto dto, Map<String, Object> model) throws ParseException, MyException {
 
@@ -136,9 +134,7 @@ public class MainController {
         sendMailService.sendMail(journalStorage);
         List<JournalStorage> journalsStorage = journalStorageRepo.findByStorageStorageType(view.getStorageType());
         List<JournalStorageDto> journalsStorageDto = journalStorageService.listDto(journalsStorage);
-        List<JournalStorage> list = journalsStorage.stream().filter(e -> e.isSignEmployee() == false).collect(Collectors.toList());
-        List<JournalStorageDto> journalsStorageDtoFilter = journalStorageService.listDto(list);
-        model.put("journalStorageDtoFilter", journalsStorageDtoFilter);
+        model.put("journalStorageDtoFilter", journalsStorageDto);
         model.put("journalStorageDto", journalsStorageDto);
         model.put("person", person);
         model.put("employee", emp);
@@ -149,7 +145,7 @@ public class MainController {
         return view.getPath();
     }
 
-    @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
+    @PreAuthorize("principal.orgCode == '041-000-4601'")
     @GetMapping("/main")
     public String main(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -187,7 +183,7 @@ public class MainController {
         return "account";
     }
 
-    @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
+    @PreAuthorize("principal.orgCode == '041-000-4601'")
     @PostMapping("/sign")
     public String putSignSecurityWorker(SignDto signDto, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -198,7 +194,7 @@ public class MainController {
         return "redirect:/" + signDto.path;
     }
 
-    @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
+    @PreAuthorize("principal.orgCode == '041-000-4601'")
     @PostMapping("/comment")
     public String comment(CommentDto dto, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -209,7 +205,7 @@ public class MainController {
         return "redirect:/" + dto.path;
     }
     
-    @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
+    @PreAuthorize("principal.orgCode == '041-000-4601'")
     @PostMapping("/edit")
     public String editJournal(Long id, JournalStorageDto dto, Model model) throws ParseException {
         String path = null;
@@ -223,7 +219,7 @@ public class MainController {
         return "redirect:/main";
     }
 
-    @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
+    @PreAuthorize("principal.orgCode == '041-000-4601'")
     @GetMapping("/edit")
     public String selectJournal(Long id, JournalStorageDto dto, Model model) {
         String path = null;
@@ -242,7 +238,7 @@ public class MainController {
         return "edit";
     }
 
-    @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
+    @PreAuthorize("principal.orgCode == '041-000-4601'")
     @GetMapping("/delete/{id}")
     public String deleteJournal(@PathVariable Long id, Model model) {
         String path = null;
@@ -251,7 +247,7 @@ public class MainController {
         return "redirect:/main";
     }
 
-    @PreAuthorize("principal.orgCode == '041-000-5570' || principal.orgCode == '041-000-4601'")
+    @PreAuthorize("principal.orgCode == '041-000-4601'")
     @GetMapping("/search")
     public String search(String request, Model model) {
         

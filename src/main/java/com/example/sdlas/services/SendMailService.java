@@ -28,7 +28,7 @@ private EmployeeClient employeeClient;
  
     public void sendMail(JournalStorage journalStorage) {
     DictionaryEmployee employee = employeeClient.getEmployeeByCode(journalStorage.getEmployee());
-    DictionaryEmployee employeeSecurity = employeeClient.getEmployeeByCode(journalStorage.getEmployee());
+    DictionaryEmployee employeeSecurity = employeeClient.getEmployeeByCode(journalStorage.getSecurityEmployee());
         String emailEmployee = employee.getEmail();
         String emailEmployeeSecurity = employeeSecurity.getEmail();
         
@@ -39,7 +39,7 @@ private EmployeeClient employeeClient;
             simpleMailMessage.setText("Добрый день, " + employee.getSurname() + " " + " " + employee.getName() + " " + employee.getMiddlename() +
                     ", вам передано устройство: " + journalStorage.getStorage().getType() + ", имеющее инвентарный №:" + 
                     journalStorage.getStorage().getNumber() + ". Для того, чтобы поставить отметку о получении данного устройства пройдите по ссылке:" + 
-                    "http://10.41.200.15:8080/myaccount" + " \n\n\n\n\nС уважением, " + employeeSecurity.getSurname() + " " + employeeSecurity.getName() + " " + employeeSecurity.getMiddlename());
+                    "http://10.41.30.43:8080/myaccount" + " \n\n\n\n\nС уважением, " + employeeSecurity.getSurname() + " " + employeeSecurity.getName() + " " + employeeSecurity.getMiddlename());
      
 
             javaMailSender.send(simpleMailMessage);

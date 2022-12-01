@@ -18,4 +18,10 @@ Any value defined here will override the pom.xml file value but is only applicab
         <com-github-philippefichet-sonarlint4netbeans.extraProperties>{}</com-github-philippefichet-sonarlint4netbeans.extraProperties>
         <org-netbeans-modules-javascript2-requirejs.enabled>true</org-netbeans-modules-javascript2-requirejs.enabled>
     </properties>
+    <spring-data xmlns="http://www.netbeans.org/ns/spring-data/1">
+        <config-files>
+            <config-file>src/main/resources/application.properties</config-file>
+        </config-files>
+        <config-file-groups/>
+    </spring-data>
 </project-shared-configuration>
